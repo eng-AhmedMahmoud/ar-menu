@@ -7,3 +7,8 @@ next-env.d.ts
 .vercel
 .venv-hy/
 .hf-out/
+
+# Raw provider output — only the converted .glb/.usdz are served
+public/models/*_raw.*
+public/models/*_hy_shape.glb
+public/models/*_white40k.obj
