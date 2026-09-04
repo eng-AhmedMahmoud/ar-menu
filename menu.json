@@ -1,16 +1,20 @@
 {
   "restaurant": {
-    "name": "Your Restaurant",
+    "name": "AR Menu Demo",
     "tagline": "Point your camera. See the dish on your table."
   },
   "dishes": [
     {
-      "slug": "example-burger",
-      "name": "Smash Burger",
-      "description": "Double patty, aged cheddar, house sauce, brioche bun.",
-      "price": "$14",
-      "image": "example-burger.jpg",
-      "tags": ["beef", "contains gluten", "contains dairy"]
+      "slug": "margherita",
+      "name": "Margherita Pizza",
+      "description": "Stone-baked, San Marzano tomato, fior di latte, olive oil.",
+      "price": "$16",
+      "image": "margherita.jpg",
+      "tags": [
+        "vegetarian",
+        "contains gluten",
+        "contains dairy"
+      ]
     }
   ]
 }

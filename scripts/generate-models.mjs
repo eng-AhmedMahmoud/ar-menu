@@ -95,7 +95,7 @@ const meshy = {
   async createTask(dish) {
     const body = {
       image_url: await imageAsDataUri(dish.image),
-      ai_model: process.env.MESHY_MODEL || 'meshy-5',
+      ai_model: process.env.MESHY_MODEL || 'meshy-7',
       topology: 'triangle',
       target_polycount: Number(process.env.MESHY_POLYCOUNT || 30000),
       should_remesh: true,
