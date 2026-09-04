@@ -74,6 +74,22 @@ for o in meshes:
 bpy.ops.object.transform_apply(location=True, rotation=False, scale=True)
 print(f"[convert] scaled x{scale:.4f} -> {width * scale:.3f}m wide")
 
+# Quick Look renders a mesh with no bound material as magenta diagonal stripes —
+# its "missing material" placeholder. An untextured mesh therefore needs a real
+# UsdPreviewSurface attached or iOS shows the error pattern instead of the dish.
+for o in meshes:
+    if not o.data.materials:
+        mat = bpy.data.materials.new(f"{slug}_fallback")
+        mat.use_nodes = True
+        bsdf = mat.node_tree.nodes.get("Principled BSDF")
+        if bsdf:
+            bsdf.inputs["Base Color"].default_value = (0.82, 0.71, 0.52, 1.0)
+            bsdf.inputs["Roughness"].default_value = 0.65
+            if "Metallic" in bsdf.inputs:
+                bsdf.inputs["Metallic"].default_value = 0.0
+        o.data.materials.append(mat)
+        print(f"[convert] {o.name}: no material, attached fallback surface")
+
 glb = os.path.join(OUT, f"{slug}.glb")
 usdz = os.path.join(OUT, f"{slug}.usdz")
 
