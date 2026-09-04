@@ -130,7 +130,10 @@ export default function ArViewer({
     }) | null;
     if (!el || !loaded || !el.getDimensions) return;
     const d = el.getDimensions();
-    const reach = Math.max(d.x, d.y, d.z) * 1.9;
+    // Radius needed to fit an object of height h at model-viewer's default
+    // 45deg field of view is about h * 1.2; the extra margin keeps a tall cup
+    // off the top and bottom edges rather than filling them.
+    const reach = Math.max(d.x, d.y, d.z) * 2.6;
     el.setAttribute("camera-orbit", `0deg 72deg ${reach.toFixed(3)}m`);
     el.setAttribute("min-camera-orbit", `auto 25deg ${(reach * 0.55).toFixed(3)}m`);
     el.setAttribute("max-camera-orbit", `auto 95deg ${(reach * 2.2).toFixed(3)}m`);

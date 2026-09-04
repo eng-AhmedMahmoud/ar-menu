@@ -66,6 +66,16 @@ export function photoUrl(dish: Dish): string {
   return `/photos/${dish.image}`
 }
 
+/**
+ * Background-free version of the photo, used wherever the image sits on a
+ * themed surface. The raw shot has a white studio backdrop, which reads as a
+ * bright slab in dark mode; the cutout generated for the mesher is transparent
+ * and blends with either theme.
+ */
+export function posterUrl(dish: Dish): string {
+  return `/photos/${dish.image.replace(/\.[^.]+$/, '')}_cut.png`
+}
+
 export function money(amount: number): string {
   const rounded = Math.round(amount * 100) / 100
   return `${menu.restaurant.currency}${Number.isInteger(rounded) ? rounded : rounded.toFixed(2)}`

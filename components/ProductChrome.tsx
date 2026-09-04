@@ -17,7 +17,7 @@ export default function ProductChrome({ children }: { children: React.ReactNode 
         <SettingsControls />
       </header>
 
-      {children}
+      <div className="product-card">{children}</div>
 
       <footer className="product-foot">
         <p>{s.arHelp}</p>

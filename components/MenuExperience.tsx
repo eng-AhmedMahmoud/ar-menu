@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useState } from 'react'
 import ArViewer from './ArViewer'
-import { menu, money, lineTotal, photoUrl, type Dish } from '@/lib/menu'
+import { menu, money, lineTotal, photoUrl, posterUrl, type Dish } from '@/lib/menu'
 import { useSettings } from './Settings'
 import { addonLabel, dishDesc, dishName, dishTags, variantLabel } from '@/lib/i18n'
 
@@ -122,7 +122,7 @@ export default function MenuExperience({ initialSlug, assets, standalone = false
       <ArViewer
         dish={dish}
         variant={variant}
-        poster={photoUrl(dish)}
+        poster={posterUrl(dish)}
         hasModel={asset.glb}
         hasUsdz={asset.usdz}
         priceLabel={money(unit)}
@@ -140,7 +140,7 @@ export default function MenuExperience({ initialSlug, assets, standalone = false
               onClick={() => swapTo(d)}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={photoUrl(d)} alt="" />
+              <img src={posterUrl(d)} alt="" />
               <span>{dishName(d, lang)}</span>
             </button>
           ))}
