@@ -15,6 +15,9 @@ import bpy, sys, math, os
 argv = sys.argv[sys.argv.index("--") + 1:]
 src, slug = argv[0], argv[1]
 MAX_FACES = int(argv[2]) if len(argv) > 2 else 150_000
+# Real-world width in metres. AR is only honest about portion size if the
+# model is the size the dish actually is.
+TARGET_WIDTH = float(argv[3]) if len(argv) > 3 else 0.30
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "public", "models")
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -67,7 +70,7 @@ minz = min((o.matrix_world @ v.co).z for o in meshes for v in o.data.vertices)
 maxx = max((o.matrix_world @ v.co).x for o in meshes for v in o.data.vertices)
 minx = min((o.matrix_world @ v.co).x for o in meshes for v in o.data.vertices)
 width = maxx - minx
-scale = 0.30 / width if width else 1.0
+scale = TARGET_WIDTH / width if width else 1.0
 for o in meshes:
     o.location.z -= minz
     o.scale = (scale, scale, scale)

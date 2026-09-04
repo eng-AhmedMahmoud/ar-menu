@@ -12,29 +12,140 @@
       "description": "Stone-baked, San Marzano tomato, fior di latte, olive oil.",
       "price": 16,
       "image": "margherita.jpg",
-      "tags": ["vegetarian", "contains gluten", "contains dairy"],
+      "tags": [
+        "vegetarian",
+        "contains gluten",
+        "contains dairy"
+      ],
       "calories": 890,
       "prepMinutes": 12,
       "variants": [
-        { "id": "personal", "label": "Personal 9\"", "priceDelta": -4, "scale": 0.75 },
-        { "id": "medium", "label": "Medium 12\"", "priceDelta": 0, "scale": 1 },
-        { "id": "large", "label": "Large 16\"", "priceDelta": 6, "scale": 1.33 }
+        {
+          "id": "personal",
+          "label": "Personal 9\"",
+          "priceDelta": -4,
+          "scale": 0.75
+        },
+        {
+          "id": "medium",
+          "label": "Medium 12\"",
+          "priceDelta": 0,
+          "scale": 1
+        },
+        {
+          "id": "large",
+          "label": "Large 16\"",
+          "priceDelta": 6,
+          "scale": 1.33
+        }
       ],
       "addons": [
-        { "id": "cheese", "label": "Extra fior di latte", "price": 3 },
-        { "id": "basil", "label": "Fresh basil", "price": 1 },
-        { "id": "chilli", "label": "Calabrian chilli", "price": 2 }
+        {
+          "id": "cheese",
+          "label": "Extra fior di latte",
+          "price": 3
+        },
+        {
+          "id": "basil",
+          "label": "Fresh basil",
+          "price": 1
+        },
+        {
+          "id": "chilli",
+          "label": "Calabrian chilli",
+          "price": 2
+        }
       ],
       "hotspots": [
-        { "id": "crust", "anchor": "0.86 0.72 0.5", "normal": "1 0.5 0",
+        {
+          "id": "crust",
+          "anchor": "0.86 0.72 0.5",
+          "normal": "1 0.5 0",
           "label": "48-hour crust",
-          "detail": "Cold-fermented two days, then stone-baked at 430°C." },
-        { "id": "cheese", "anchor": "0.5 0.99 0.44", "normal": "0 1 0",
+          "detail": "Cold-fermented two days, then stone-baked at 430°C."
+        },
+        {
+          "id": "cheese",
+          "anchor": "0.5 0.99 0.44",
+          "normal": "0 1 0",
           "label": "Fior di latte",
-          "detail": "Torn by hand, added in the last 90 seconds." },
-        { "id": "board", "anchor": "0.18 0.30 0.78", "normal": "0 1 0",
+          "detail": "Torn by hand, added in the last 90 seconds."
+        },
+        {
+          "id": "board",
+          "anchor": "0.18 0.30 0.78",
+          "normal": "0 1 0",
           "label": "Olive wood board",
-          "detail": "Cut and served on the board — keeps the base crisp." }
+          "detail": "Cut and served on the board — keeps the base crisp."
+        }
+      ]
+    },
+    {
+      "slug": "arrabbiata",
+      "name": "Penne Arrabbiata",
+      "description": "Penne, San Marzano tomato, garlic, Calabrian chilli, olives, parsley.",
+      "price": 13,
+      "image": "arrabbiata.jpg",
+      "tags": [
+        "vegetarian",
+        "spicy",
+        "contains gluten"
+      ],
+      "calories": 640,
+      "prepMinutes": 10,
+      "variants": [
+        {
+          "id": "regular",
+          "label": "Regular",
+          "priceDelta": 0,
+          "scale": 1
+        },
+        {
+          "id": "sharing",
+          "label": "Sharing bowl",
+          "priceDelta": 8,
+          "scale": 1.4
+        }
+      ],
+      "addons": [
+        {
+          "id": "parmesan",
+          "label": "Shaved parmesan",
+          "price": 2
+        },
+        {
+          "id": "chicken",
+          "label": "Grilled chicken",
+          "price": 5
+        },
+        {
+          "id": "extra-chilli",
+          "label": "Extra chilli",
+          "price": 1
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "penne",
+          "anchor": "0.5 0.92 0.45",
+          "normal": "0 1 0",
+          "label": "Bronze-cut penne",
+          "detail": "Rough surface so the sauce actually clings."
+        },
+        {
+          "id": "chilli",
+          "anchor": "0.72 0.85 0.6",
+          "normal": "0.5 1 0",
+          "label": "Calabrian chilli",
+          "detail": "Slow heat, not sharp — build it up with extra chilli."
+        },
+        {
+          "id": "bowl",
+          "anchor": "0.14 0.35 0.5",
+          "normal": "-1 0.3 0",
+          "label": "Served in stoneware",
+          "detail": "Keeps the pasta hot to the last forkful."
+        }
       ]
     }
   ]

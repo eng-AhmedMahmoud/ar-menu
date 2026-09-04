@@ -72,6 +72,11 @@ async function imageAsDataUri(relPath) {
   return `data:${mime};base64,${buf.toString('base64')}`
 }
 
+function cutoutFor(image) {
+  const cut = image.replace(/\.[^.]+$/, '_cut.png')
+  return existsSync(path.join(PHOTOS_DIR, cut)) ? cut : image
+}
+
 async function download(url, dest) {
   const res = await fetch(url)
   if (!res.ok) throw new Error(`download failed ${res.status} for ${url}`)
@@ -94,7 +99,9 @@ const meshy = {
 
   async createTask(dish) {
     const body = {
-      image_url: await imageAsDataUri(dish.image),
+      // Prefer the transparent cutout when one exists: a white studio backdrop
+      // otherwise gets modelled as a slab welded to the dish.
+      image_url: await imageAsDataUri(cutoutFor(dish.image)),
       ai_model: process.env.MESHY_MODEL || 'meshy-7',
       topology: 'triangle',
       target_polycount: Number(process.env.MESHY_POLYCOUNT || 30000),
