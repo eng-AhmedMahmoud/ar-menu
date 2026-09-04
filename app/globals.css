@@ -380,3 +380,63 @@ code { background: var(--surface); border: 1px solid var(--border); border-radiu
   gap: 12px;
   padding-bottom: 14px;
 }
+
+/* ------------------------------- mobile ---------------------------------- */
+
+@media (max-width: 560px) {
+  .page { padding: 14px 14px 88px; }
+
+  /* The bar carried a back label, a brand line, a tagline and six buttons.
+     On a phone only the way back and the two switches earn their space. */
+  .topbar,
+  .product-brand {
+    gap: 8px;
+    padding-bottom: 12px;
+  }
+
+  .brand-tag { display: none; }
+
+  .back {
+    font-size: 0;
+    padding: 6px 0;
+  }
+  .back::before {
+    content: '←';
+    font-size: 19px;
+    line-height: 1;
+  }
+
+  .masthead { padding: 18px 0 20px; }
+  .masthead h1 { font-size: 26px; }
+  .brand-name { font-size: 14px; }
+
+  .seg button {
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+
+  /* Two-line dish names pushed the rail to 84px tall for no benefit. */
+  .rail-item { width: 66px; }
+  .rail-item img { height: 50px; }
+  .rail-item span {
+    padding: 5px 4px;
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .viewer { aspect-ratio: 1 / 1; max-height: 54vh; }
+  .product-page .viewer { aspect-ratio: 3 / 4; max-height: 58vh; }
+
+  .detail-head h1 { font-size: 21px; }
+  .chip { padding: 10px 13px; font-size: 14px; }
+  .primary { padding: 15px 18px; }
+}
+
+/* On a narrow phone the back arrow alone leaves the controls room to sit at
+   the far edge without wrapping. */
+@media (max-width: 380px) {
+  .seg button { padding: 7px 8px; font-size: 11px; }
+  .meta li:nth-child(n + 4) { display: none; }
+}

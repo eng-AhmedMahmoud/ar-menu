@@ -65,6 +65,7 @@ export default function ArViewer({
   const [ready, setReady] = useState(false);
   const [openSpot, setOpenSpot] = useState<string | null>(null);
   const [resolved, setResolved] = useState<Record<string, string>>({});
+  const [loaded, setLoaded] = useState(false);
   const viewerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -77,52 +78,34 @@ export default function ArViewer({
     };
   }, []);
 
-  // The USDZ banner's call-to-action surfaces as a `quick-look-button-tapped`
-  // event on the element once Quick Look closes.
+  // Swapping dishes replaces the element, so the new model starts unloaded.
   useEffect(() => {
-    const el = viewerRef.current;
-    if (!el) return;
-    const handler = () => onOrder();
-    el.addEventListener("quick-look-button-tapped", handler);
-    return () => el.removeEventListener("quick-look-button-tapped", handler);
-  }, [ready, onOrder]);
+    setLoaded(false);
+  }, [dish.slug, variant?.id]);
 
-  // Anchors are fractions of the bounding box, so they must be converted to
-  // metres once the model reports its real dimensions. Re-runs on dish swap.
-  useEffect(() => {
-    const el = viewerRef.current as
-      | (HTMLElement & {
-          getDimensions?: () => { x: number; y: number; z: number };
-          getBoundingBoxCenter?: () => { x: number; y: number; z: number };
-        })
-      | null;
-    if (!el || !ready) return;
 
-    const place = () => {
-      if (!el.getDimensions || !el.getBoundingBoxCenter) return;
-      const dim = el.getDimensions();
-      const mid = el.getBoundingBoxCenter();
-      const next: Record<string, string> = {};
-      for (const spot of dish.hotspots ?? []) {
-        if (!spot.anchor) continue;
-        const [fx, fy, fz] = spot.anchor.split(/\s+/).map(Number);
-        next[spot.id] = [
-          mid.x + (fx - 0.5) * dim.x,
-          mid.y + (fy - 0.5) * dim.y,
-          mid.z + (fz - 0.5) * dim.z,
-        ]
-          .map((n) => n.toFixed(4))
-          .join(" ");
-      }
-      setResolved(next);
-    };
 
-    el.addEventListener("load", place);
-    place();
-    return () => el.removeEventListener("load", place);
-  }, [ready, dish]);
-
+  // Applied as an attribute at mount rather than mutated afterwards: changing
+  // `scale` on a live model-viewer throws inside its own onUpdateScene and
+  // leaves the canvas blank, so the element is keyed on the variant instead and
+  // simply remounts with the correct size.
   const scale = variant?.scale ?? 1;
+
+  // Auto-framing runs against the unscaled model, so a scaled-up variant ends
+  // up clipped by a camera fitted to the smaller one. camera-orbit is safe to
+  // mutate (unlike scale), so the radius is derived from the real dimensions
+  // once the model reports them.
+  useEffect(() => {
+    const el = viewerRef.current as (HTMLElement & {
+      getDimensions?: () => { x: number; y: number; z: number };
+    }) | null;
+    if (!el || !loaded || !el.getDimensions) return;
+    const d = el.getDimensions();
+    const reach = Math.max(d.x, d.y, d.z) * 1.9;
+    el.setAttribute("camera-orbit", `0deg 72deg ${reach.toFixed(3)}m`);
+    el.setAttribute("min-camera-orbit", `auto 25deg ${(reach * 0.55).toFixed(3)}m`);
+    el.setAttribute("max-camera-orbit", `auto 95deg ${(reach * 2.2).toFixed(3)}m`);
+  }, [loaded, scale]);
 
   if (!ready || !hasModel) {
     return (
@@ -140,16 +123,16 @@ export default function ArViewer({
     <div className="viewer">
       <model-viewer
         ref={viewerRef as never}
-        key={dish.slug}
+        key={`${dish.slug}:${variant?.id ?? "base"}`}
         src={`/models/${dish.slug}.glb`}
         ios-src={
           hasUsdz
             ? iosSrc(dish.slug, dishName(dish, lang), priceLabel, dishDesc(dish, lang), txt.addToOrder)
             : undefined
         }
+        scale={`${scale} ${scale} ${scale}`}
         alt={dishName(dish, lang)}
         poster={poster}
-        scale={`${scale} ${scale} ${scale}`}
         ar
         ar-modes="webxr scene-viewer quick-look"
         ar-scale="fixed"
@@ -160,8 +143,6 @@ export default function ArViewer({
         auto-rotate-delay={2000}
         rotation-per-second="16deg"
         interaction-prompt="none"
-        min-camera-orbit="auto 25deg auto"
-        max-camera-orbit="auto 95deg auto"
         shadow-intensity="1.1"
         shadow-softness="0.8"
         exposure="1.15"
