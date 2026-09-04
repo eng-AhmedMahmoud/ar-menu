@@ -147,6 +147,142 @@
           "detail": "Keeps the pasta hot to the last forkful."
         }
       ]
+    },
+    {
+      "slug": "brulee-milk-tea",
+      "name": "Brûlée Milk Tea",
+      "description": "Roasted oolong milk tea, torched brûlée crust, brown-sugar tapioca pearls.",
+      "price": 6,
+      "image": "brulee-milk-tea.jpg",
+      "tags": [
+        "contains dairy",
+        "cold",
+        "signature"
+      ],
+      "calories": 380,
+      "prepMinutes": 4,
+      "variants": [
+        {
+          "id": "regular",
+          "label": "Regular 16oz",
+          "priceDelta": 0,
+          "scale": 1
+        },
+        {
+          "id": "large",
+          "label": "Large 22oz",
+          "priceDelta": 2,
+          "scale": 1.18
+        }
+      ],
+      "addons": [
+        {
+          "id": "extra-boba",
+          "label": "Extra tapioca pearls",
+          "price": 1
+        },
+        {
+          "id": "extra-brulee",
+          "label": "Double brûlée crust",
+          "price": 1
+        },
+        {
+          "id": "less-sweet",
+          "label": "Less sweet",
+          "price": 0
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "brulee",
+          "anchor": "0.5 0.96 0.5",
+          "normal": "0 1 0",
+          "label": "Torched to order",
+          "detail": "Sugar crust caramelised on the cup, never pre-made."
+        },
+        {
+          "id": "pearls",
+          "anchor": "0.5 0.12 0.4",
+          "normal": "0 0 1",
+          "label": "Brown-sugar pearls",
+          "detail": "Cooked fresh, held no longer than four hours."
+        },
+        {
+          "id": "tea",
+          "anchor": "0.86 0.5 0.5",
+          "normal": "1 0 0",
+          "label": "Roasted oolong",
+          "detail": "Charcoal-roasted leaf, steeped daily."
+        }
+      ]
+    },
+    {
+      "slug": "hot-cocoa",
+      "name": "Signature Hot Cocoa",
+      "description": "Single-origin cocoa, steamed whole milk, poured latte art.",
+      "price": 5,
+      "image": "hot-cocoa.jpg",
+      "tags": [
+        "contains dairy",
+        "hot",
+        "vegetarian"
+      ],
+      "calories": 310,
+      "prepMinutes": 3,
+      "variants": [
+        {
+          "id": "small",
+          "label": "Small 8oz",
+          "priceDelta": -1,
+          "scale": 0.88
+        },
+        {
+          "id": "regular",
+          "label": "Regular 12oz",
+          "priceDelta": 0,
+          "scale": 1
+        }
+      ],
+      "addons": [
+        {
+          "id": "marshmallow",
+          "label": "Toasted marshmallow",
+          "price": 1
+        },
+        {
+          "id": "oat",
+          "label": "Oat milk",
+          "price": 1
+        },
+        {
+          "id": "double-shot",
+          "label": "Add espresso",
+          "price": 2
+        }
+      ],
+      "hotspots": [
+        {
+          "id": "art",
+          "anchor": "0.5 0.97 0.5",
+          "normal": "0 1 0",
+          "label": "Poured, not stencilled",
+          "detail": "Free-poured by hand on every cup."
+        },
+        {
+          "id": "cocoa",
+          "anchor": "0.5 0.55 0.12",
+          "normal": "0 0 -1",
+          "label": "Single-origin cocoa",
+          "detail": "Ghanaian beans, ground in house each week."
+        },
+        {
+          "id": "cup",
+          "anchor": "0.14 0.3 0.5",
+          "normal": "-1 0 0",
+          "label": "Compostable cup",
+          "detail": "Plant-lined board, no plastic coating."
+        }
+      ]
     }
   ]
 }
