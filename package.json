@@ -1,0 +1,27 @@
+{
+  "name": "ar-menu",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "portless ar-menu -- next dev",
+    "build": "next build",
+    "start": "next start",
+    "models": "node scripts/generate-models.mjs",
+    "qr": "node scripts/generate-qr.mjs",
+    "pipeline": "node scripts/generate-models.mjs && node scripts/generate-qr.mjs"
+  },
+  "dependencies": {
+    "@google/model-viewer": "^4.0.0",
+    "next": "^15.5.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "qrcode": "^1.5.4",
+    "typescript": "^5.8.3"
+  }
+}

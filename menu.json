@@ -1,0 +1,16 @@
+{
+  "restaurant": {
+    "name": "Your Restaurant",
+    "tagline": "Point your camera. See the dish on your table."
+  },
+  "dishes": [
+    {
+      "slug": "example-burger",
+      "name": "Smash Burger",
+      "description": "Double patty, aged cheddar, house sauce, brioche bun.",
+      "price": "$14",
+      "image": "example-burger.jpg",
+      "tags": ["beef", "contains gluten", "contains dairy"]
+    }
+  ]
+}
