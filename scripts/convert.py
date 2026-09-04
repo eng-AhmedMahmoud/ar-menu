@@ -46,10 +46,17 @@ if total > MAX_FACES:
     total = sum(len(o.data.polygons) for o in meshes)
     print(f"[convert] decimated to {total} faces (ratio {ratio:.4f})")
 
-# Hunyuan emits Z-up at unit scale; AR expects Y-up and a plausible real-world
-# size, and Quick Look places the model on the floor from its origin.
-for o in meshes:
-    o.rotation_euler[0] = math.radians(-90)
+# Up-axis varies by provider: Meshy exports Z-up, Hunyuan's Space already
+# returns Y-up. Rotating blindly tips an already-upright dish onto its side, so
+# infer it — for a plated dish the shortest bounding-box axis is the vertical.
+coords = [(o.matrix_world @ v.co) for o in meshes for v in o.data.vertices]
+extent = [max(c[i] for c in coords) - min(c[i] for c in coords) for i in range(3)]
+up_axis = extent.index(min(extent))
+print(f"[convert] extents {[round(e, 3) for e in extent]} -> up axis {'XYZ'[up_axis]}")
+if up_axis == 1:
+    # Y is thinnest: mesh is Y-up (glTF convention), Blender wants Z-up.
+    for o in meshes:
+        o.rotation_euler[0] = math.radians(90)
 
 bpy.ops.object.select_all(action="SELECT")
 bpy.context.view_layer.objects.active = meshes[0]

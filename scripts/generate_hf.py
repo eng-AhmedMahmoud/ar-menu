@@ -94,6 +94,15 @@ def generate(client, dish) -> None:
     if not src.exists():
         raise RuntimeError(f"photo missing: {src}")
 
+    # A white studio backdrop gets modelled as a slab welded to the dish, so
+    # feed the mesher a transparent cutout instead of the raw photo.
+    cut = src.with_name(f"{src.stem}_cut.png")
+    if not cut.exists():
+        subprocess.run([sys.executable, str(ROOT / "scripts" / "cutout.py"), str(src)], check=True)
+    if cut.exists():
+        src = cut
+        print(f"    using cutout {cut.name}")
+
     result = client.predict(
         image=handle_file(str(src)),
         steps=int(os.environ.get("HF_STEPS", "30")),
