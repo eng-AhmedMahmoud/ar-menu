@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>تجربة القائمة بالواقع المعزز — دليل العميل</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  @page { size: A4; margin: 18mm 16mm 20mm; }
+
+  :root {
+    --ink:   #14170F;
+    --muted: #5F6357;
+    --rule:  #D8D6CC;
+    --sunk:  #F2F1EA;
+    --olive: #3D5A40;
+    --brass: #8A6616;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #fff;
+    color: var(--ink);
+    font-family: "IBM Plex Sans Arabic", "Geeza Pro", Tahoma, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.9;
+  }
+
+  .doc { max-width: 178mm; margin: 0 auto; }
+
+  h1, h2, h3 { margin: 0; line-height: 1.45; font-weight: 700; }
+  h1 { font-size: 20pt; }
+  h2 { font-size: 13.5pt; color: var(--olive); }
+  h3 { font-size: 11pt; }
+
+  p { margin: 0 0 0.75em; }
+  p:last-child { margin-bottom: 0; }
+
+  header.top { border-bottom: 2.5pt solid var(--ink); padding-bottom: 10pt; margin-bottom: 16pt; }
+
+  .kicker {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 8pt; letter-spacing: 0.12em;
+    color: var(--olive); text-transform: uppercase; margin: 0 0 6pt;
+  }
+
+  .lede { color: var(--muted); font-size: 11pt; margin-top: 6pt; }
+
+  section { margin-bottom: 18pt; break-inside: avoid-page; }
+  .sec-head { border-bottom: 0.75pt solid var(--rule); padding-bottom: 5pt; margin-bottom: 9pt; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 8pt 0; }
+  th, td { border: 0.5pt solid var(--rule); padding: 5pt 7pt; text-align: right; vertical-align: top; }
+  thead th { background: var(--sunk); font-weight: 600; font-size: 8.5pt; color: var(--muted); }
+  td.n, th.n {
+    font-family: "IBM Plex Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    direction: ltr; text-align: left; white-space: nowrap;
+  }
+  caption { caption-side: bottom; text-align: right; font-size: 8.5pt; color: var(--muted); padding-top: 5pt; }
+
+  .note {
+    border-right: 3pt solid var(--olive);
+    background: var(--sunk);
+    padding: 8pt 11pt; margin: 9pt 0; font-size: 10pt;
+  }
+  .note.warn { border-right-color: var(--brass); }
+
+  ul { margin: 6pt 0; padding-right: 16pt; }
+  li { margin-bottom: 5pt; }
+
+  .stages { counter-reset: stage; margin: 10pt 0; padding: 0; list-style: none; }
+  .stages li {
+    counter-increment: stage;
+    position: relative;
+    padding-right: 26pt;
+    margin-bottom: 9pt;
+  }
+  .stages li::before {
+    content: counter(stage);
+    position: absolute; right: 0; top: 2pt;
+    width: 17pt; height: 17pt;
+    border: 0.75pt solid var(--olive); border-radius: 50%;
+    color: var(--olive);
+    font-family: "IBM Plex Mono", monospace; font-size: 8.5pt;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .stages strong { display: block; }
+  .stages span { color: var(--muted); font-size: 9.5pt; }
+
+  footer { border-top: 0.75pt solid var(--rule); padding-top: 8pt; font-size: 8.5pt; color: var(--muted); }
+  .page-break { break-before: page; }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <header class="top">
+    <p class="kicker">Devya · AR Menu</p>
+    <h1>تجربة القائمة بالواقع المعزز</h1>
+    <p class="lede">يمسح الزبون رمزًا على الطاولة، فيظهر الطبق أمامه بحجمه الحقيقي على طاولته، ويستطيع أن يدور حوله ويقرأ مكوّناته ويطلبه — دون تثبيت أي تطبيق.</p>
+  </header>
+
+  <section>
+    <div class="sec-head"><h2>ما الذي يراه الزبون</h2></div>
+    <ul>
+      <li>الطبق مجسّمًا بحجمه الحقيقي على الطاولة، فيقدّر الحصة قبل أن يطلب.</li>
+      <li>تبديل الأصناف داخل الشاشة نفسها دون الخروج أو إعادة التحميل.</li>
+      <li>اختيار الحجم، فيتغيّر المجسّم والسعر معًا في اللحظة نفسها.</li>
+      <li>نقاط تعريفية على المجسّم تشرح المكوّنات وطريقة التحضير.</li>
+      <li>واجهة بالعربية والإنجليزية، ومظهر فاتح وداكن.</li>
+      <li>سلّة طلب تُرسَل مباشرة إلى المطعم.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>كيف صُنعت هذه التجربة</h2></div>
+    <p>ما يبدو للزبون لمسة واحدة على الشاشة هو في الحقيقة ناتج سلسلة معالجة متعددة المراحل، تبدأ من صورة مسطّحة واحدة وتنتهي بمجسّم قابل للوقوف على طاولة حقيقية. هذه المراحل مختصرة دون تفاصيل تقنية:</p>
+
+    <ol class="stages">
+      <li>
+        <strong>تحليل الصورة وعزل الطبق</strong>
+        <span>تُفصل الخلفية عن الطبق قبل أي معالجة؛ الخلفيات المتصلة بالطبق تُقرأ خطأً كجزء منه وتُنتج أسطحًا دخيلة.</span>
+      </li>
+      <li>
+        <strong>إعادة بناء الشكل ثلاثي الأبعاد</strong>
+        <span>يُستنتج الشكل الحجمي من مستوى واحد للصورة، ويُبنى سطح يتجاوز مئتي ألف مثلث لكل صنف حتى تظهر تفاصيل مثل حواف العجين وحبّات اللؤلؤ منفصلة لا كتلة واحدة.</span>
+      </li>
+      <li>
+        <strong>كساء السطح بخامات واقعية</strong>
+        <span>تُولَّد خرائط اللون والخشونة والانعكاس بدقة عالية، فيقرأ السطح كطعام حقيقي تحت إضاءة الغرفة لا كرسم مسطّح.</span>
+      </li>
+      <li>
+        <strong>معايرة الحجم الحقيقي</strong>
+        <span>يُضبط كل مجسّم على أبعاده الفعلية بالسنتيمتر — البيتزا ٣٢ سم والكوب ٩ سم — ويُمنع تكبيره أو تصغيره داخل المشهد، لأن مصداقية الحصة هي جوهر الفكرة.</span>
+      </li>
+      <li>
+        <strong>التهيئة لمنصتين مختلفتين</strong>
+        <span>محرّكا الواقع المعزز في iOS وأندرويد يقبلان صيغتين مختلفتين ويدعمان قدرات ضغط مختلفة، فيُخرَج لكل منهما ملف منفصل بإعدادات خاصة به.</span>
+      </li>
+      <li>
+        <strong>الضغط دون فقدان التفاصيل</strong>
+        <span>يُختصر حجم الملف من عشرات الميجابايت إلى ما دون ميجابايتين مع الاحتفاظ بكامل التفاصيل، حتى يفتح المجسّم على شبكة المطعم في ثوانٍ لا دقائق.</span>
+      </li>
+      <li>
+        <strong>ضبط الجودة والمراجعة</strong>
+        <span>تُراجَع نتيجة كل صنف على جهاز حقيقي: اتجاه المجسّم، وصحة الخامات، وسلوكه عند وضعه على الطاولة، قبل اعتماده في القائمة.</span>
+      </li>
+    </ol>
+
+    <div class="note">
+      <p><strong>لماذا يستحق ذلك الذكر:</strong> كل مرحلة أعلاه لها طرق فشل صامتة — مجسّم يظهر مقلوبًا، أو بلا خامة فيبدو كسطح مخطّط، أو ثقيل يستنزف بيانات الزبون فيغلق الصفحة قبل أن تفتح. النتيجة التي ترونها هي ما بقي بعد معالجة هذه الحالات واحدة واحدة.</p>
+    </div>
+
+    <table>
+      <caption>أرقام التنفيذ الفعلي لأصناف هذا العرض.</caption>
+      <thead>
+        <tr><th>المؤشر</th><th class="n">القيمة</th><th>الأثر على الزبون</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>دقة سطح المجسّم</td><td class="n">200,000+</td><td>تفاصيل منفصلة لا كتلة مصمتة</td></tr>
+        <tr><td>دقة خرائط الخامة</td><td class="n">4K</td><td>سطح يقرأ كطعام حقيقي</td></tr>
+        <tr><td>حجم الملف المُسلَّم</td><td class="n">&lt; 2 MB</td><td>فتح سريع على شبكة المطعم</td></tr>
+        <tr><td>دقة الحجم المعروض</td><td class="n">± 1 cm</td><td>تقدير صادق للحصة</td></tr>
+        <tr><td>ما يحتاجه الزبون</td><td class="n">0</td><td>لا تطبيق ولا حساب ولا تسجيل</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="page-break">
+    <div class="sec-head"><h2>ملحق (أ): دليل تصوير الأطباق</h2></div>
+    <p>جودة الصورة المصدر هي العامل الأول والأخير في جودة المجسّم الناتج؛ لا يمكن لأي معالجة أن تعوّض صورة رديئة. هذا الدليل يُسلَّم قبل بدء التنفيذ.</p>
+
+    <div class="note warn">
+      <p><strong>شاهد من التنفيذ الفعلي:</strong> صورة بدقة 320 × 320 بكسل أنتجت مجسّمًا فقدت فيه المعكرونة تفاصيلها وتحوّلت إلى شرائح مسطّحة، كما تحوّلت الخلفية البيضاء إلى لوح مصمت ملتحم بالطبق. الصور نفسها بدقة 1024 بكسل أعطت حبّات لؤلؤ منفصلة وحروفًا مقروءة على الكوب. رفع الدقة هو أعلى تحسين متاح، ولا يقارنه أي إعداد آخر.</p>
+    </div>
+
+    <h3 style="margin-top:12pt">أولًا: المواصفات الفنية الإلزامية</h3>
+    <table>
+      <caption>الصور التي لا تستوفي هذه المواصفات تُرفض قبل التنفيذ، لا بعده.</caption>
+      <thead>
+        <tr><th>البند</th><th class="n">الحد الأدنى</th><th class="n">المُوصى به</th><th>سبب الاشتراط</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>دقة الصورة</td><td class="n">1200 px</td><td class="n">2000 px</td><td>يُعاد بناء السطح من البكسلات المتاحة</td></tr>
+        <tr><td>الصيغة</td><td class="n">JPEG / PNG</td><td class="n">JPEG أصلي</td><td>ألا تكون معالجة أو مضغوطة مسبقًا</td></tr>
+        <tr><td>حجم الملف</td><td class="n">≥ 500 KB</td><td class="n">2 – 8 MB</td><td>الملف الصغير دليل ضغط أتلف التفاصيل</td></tr>
+        <tr><td>نسبة الطبق من الإطار</td><td class="n">70%</td><td class="n">85%</td><td>الطبق البعيد يعطي بكسلات أقل للسطح</td></tr>
+        <tr><td>زاوية التصوير</td><td class="n">30°</td><td class="n">40° – 45°</td><td>الزاوية العلوية المطلقة تلغي الحجم والارتفاع</td></tr>
+        <tr><td>عدد الأطباق</td><td class="n" colspan="2">طبق واحد فقط</td><td>أي عنصر إضافي يدخل في المجسّم</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      <p><strong>تحذير بشأن طريقة الإرسال:</strong> لا تُرسَل الصور عبر واتساب أو أي تطبيق مراسلة يضغط الصور تلقائيًا، فالضغط يهبط بالدقة إلى ما دون الحد المقبول ويُفقد التفاصيل نهائيًا. تُرسَل الملفات الأصلية عبر Google Drive أو WeTransfer أو كمرفق بريد إلكتروني بصيغة «ملف» لا «صورة».</p>
+    </div>
+
+    <h3 style="margin-top:12pt">ثانيًا: قائمة التحقق قبل التصوير</h3>
+    <table>
+      <thead><tr><th style="width:50%">مطلوب</th><th>ممنوع</th></tr></thead>
+      <tbody>
+        <tr><td>خلفية سادة بلون واحد، ويفضَّل الرمادي الفاتح أو الأبيض المتجانس</td><td>خلفيات مزخرفة أو مفارش منقوشة أو أسطح خشبية بارزة العروق</td></tr>
+        <tr><td>إضاءة منتشرة واسعة من جانب واحد مع عاكس على الجانب المقابل</td><td>الفلاش المباشر، وضوء الشمس الحاد، والظلال القاطعة عبر الطبق</td></tr>
+        <tr><td>الطبق كاملًا داخل الإطار مع هامش بسيط من كل جانب</td><td>قصّ حافة الطبق أو خروج جزء منه عن الإطار</td></tr>
+        <tr><td>تركيز حاد على سطح الطبق بالكامل</td><td>عمق ميدان ضحل يُضبِّب مؤخرة الطبق</td></tr>
+        <tr><td>الطبق في حالته النهائية كما يُقدَّم للزبون</td><td>أيادٍ أو أدوات مائدة أو أكواب أو مناديل داخل الإطار</td></tr>
+        <tr><td>أسطح مطفية غير عاكسة</td><td>الزجاج الشفاف والمعادن اللامعة والصلصات شديدة اللمعان</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:12pt">ثالثًا: أخطاء شائعة وأثرها المباشر</h3>
+    <table>
+      <caption>جميع الحالات أدناه رُصدت أثناء التنفيذ الفعلي.</caption>
+      <thead><tr><th>الخطأ</th><th>النتيجة في المجسّم</th><th>المعالجة</th></tr></thead>
+      <tbody>
+        <tr><td>دقة منخفضة (أقل من 800 بكسل)</td><td>سطح مسطح خالٍ من التفاصيل</td><td>إعادة التصوير — لا حل تقني</td></tr>
+        <tr><td>خلفية بيضاء متصلة بالطبق</td><td>لوح مصمت ملتحم أسفل الطبق</td><td>عزل الخلفية قبل المعالجة</td></tr>
+        <tr><td>تصوير عمودي من أعلى</td><td>غياب الارتفاع والحجم الحقيقي</td><td>إعادة التصوير بزاوية 40°</td></tr>
+        <tr><td>ظل حاد يقطع الطبق</td><td>انخفاض يُقرأ كتجويف في السطح</td><td>إضاءة منتشرة أو عاكس</td></tr>
+        <tr><td>أدوات مائدة داخل الإطار</td><td>الشوكة تدخل ضمن المجسّم</td><td>قصّ الإطار أو إعادة التصوير</td></tr>
+        <tr><td>ضغط تطبيقات المراسلة</td><td>فقد التفاصيل الدقيقة نهائيًا</td><td>إرسال الملف الأصلي</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:12pt">رابعًا: إعداد اقتصادي كافٍ</h3>
+    <p>لا يشترط استوديو احترافي؛ الإعداد التالي كافٍ تمامًا وتكلفته لا تُذكر:</p>
+    <ul>
+      <li>هاتف حديث بكاميرا 12 ميجابكسل فأعلى، مع تعطيل الفلاش وضبط أعلى دقة متاحة.</li>
+      <li>نافذة جانبية واسعة كمصدر إضاءة وحيد، مع ستارة بيضاء رقيقة لنشر الضوء.</li>
+      <li>لوح فوم أبيض أو كرتون مقوّى على الجانب المقابل لملء الظل.</li>
+      <li>ورقة كبيرة سادة تُثنى خلف الطبق لتكوين خلفية متصلة بلا حواف.</li>
+      <li>حامل ثابت أو سطح مستقر لتفادي اهتزاز الصورة.</li>
+    </ul>
+    <p>يُلتقط لكل صنف من ثلاث إلى خمس صور بزوايا متقاربة وتُختار أوضحها؛ الفارق في الجهد معدوم بينما يرتفع احتمال نجاح التنفيذ من المحاولة الأولى.</p>
+  </section>
+
+  <footer>
+    <p>أُعدّ هذا الدليل استنادًا إلى التنفيذ الفعلي لأصناف العرض التجريبي. المواصفات الواردة في الملحق (أ) شرط لبدء التنفيذ، ويُمنح كل صنف مراجعة مجانية واحدة عند استيفاء صورته لهذه المواصفات.</p>
+  </footer>
+
+</div>
+</body>
+</html>
