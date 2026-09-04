@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>خطة عمل وتسعير خدمة قوائم الطعام بالواقع المعزز</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  @page { size: A4; margin: 18mm 16mm 20mm; }
+
+  :root {
+    --ink:    #14170F;
+    --muted:  #5F6357;
+    --rule:   #D8D6CC;
+    --sunk:   #F2F1EA;
+    --olive:  #3D5A40;
+    --brass:  #8A6616;
+    --paper:  #FFFFFF;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "IBM Plex Sans Arabic", "Geeza Pro", "Al Nile", Tahoma, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.85;
+  }
+
+  .doc { max-width: 178mm; margin: 0 auto; }
+
+  h1, h2, h3 { margin: 0; line-height: 1.4; font-weight: 700; }
+  h1 { font-size: 21pt; letter-spacing: -0.01em; }
+  h2 { font-size: 14pt; color: var(--olive); }
+  h3 { font-size: 11.5pt; }
+
+  p { margin: 0 0 0.7em; }
+  p:last-child { margin-bottom: 0; }
+
+  header.top {
+    border-bottom: 2.5pt solid var(--ink);
+    padding-bottom: 10pt;
+    margin-bottom: 18pt;
+  }
+
+  .kicker {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 8pt;
+    letter-spacing: 0.12em;
+    color: var(--olive);
+    text-transform: uppercase;
+    margin: 0 0 6pt;
+  }
+
+  .lede { color: var(--muted); font-size: 11pt; margin-top: 6pt; }
+
+  .stamp {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 8pt;
+    color: var(--muted);
+    margin-top: 8pt;
+  }
+
+  section { margin-bottom: 20pt; break-inside: avoid-page; }
+
+  .sec-head {
+    border-bottom: 0.75pt solid var(--rule);
+    padding-bottom: 5pt;
+    margin-bottom: 10pt;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5pt;
+    margin: 8pt 0;
+  }
+
+  th, td {
+    border: 0.5pt solid var(--rule);
+    padding: 5pt 7pt;
+    text-align: right;
+    vertical-align: top;
+  }
+
+  thead th {
+    background: var(--sunk);
+    font-weight: 600;
+    font-size: 8.5pt;
+    color: var(--muted);
+  }
+
+  td.n, th.n {
+    font-family: "IBM Plex Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    text-align: left;
+    direction: ltr;
+    white-space: nowrap;
+  }
+
+  .money { color: var(--brass); font-weight: 600; }
+
+  tr.sum td { background: var(--sunk); font-weight: 700; border-top: 1.5pt solid var(--ink); }
+
+  caption {
+    caption-side: bottom;
+    text-align: right;
+    font-size: 8.5pt;
+    color: var(--muted);
+    padding-top: 5pt;
+  }
+
+  .note {
+    border-right: 3pt solid var(--olive);
+    background: var(--sunk);
+    padding: 8pt 11pt;
+    margin: 9pt 0;
+    font-size: 10pt;
+  }
+
+  .note.warn { border-right-color: var(--brass); }
+
+  ul { margin: 6pt 0; padding-right: 16pt; }
+  li { margin-bottom: 5pt; }
+
+  .tiers { display: flex; gap: 8pt; margin: 10pt 0; }
+
+  .tier {
+    flex: 1;
+    border: 0.75pt solid var(--rule);
+    padding: 10pt;
+    break-inside: avoid;
+  }
+
+  .tier.mid { border: 1.5pt solid var(--olive); }
+  .tier h3 { margin-bottom: 3pt; }
+  .tier .cap { font-size: 8.5pt; color: var(--muted); margin-bottom: 7pt; }
+
+  .tier .amt {
+    font-family: "IBM Plex Mono", monospace;
+    font-variant-numeric: tabular-nums;
+    direction: ltr;
+    text-align: left;
+    font-size: 15pt;
+    font-weight: 600;
+    color: var(--brass);
+  }
+
+  .tier .per { font-size: 8.5pt; color: var(--muted); direction: ltr; text-align: left; }
+  .tier ul { padding-right: 13pt; font-size: 9pt; margin-top: 7pt; }
+
+  footer {
+    border-top: 0.75pt solid var(--rule);
+    padding-top: 8pt;
+    font-size: 8.5pt;
+    color: var(--muted);
+  }
+
+  .page-break { break-before: page; }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <header class="top">
+    <p class="kicker">Devya · AR Menu</p>
+    <h1>خطة عمل وتسعير خدمة قوائم الطعام بالواقع المعزز</h1>
+    <p class="lede">نموذج تشغيلي وتسعيري لخدمة تحويل صور الأطباق إلى نماذج ثلاثية الأبعاد يعرضها الزبون على طاولته عبر مسح رمز الاستجابة السريعة، دون تثبيت أي تطبيق.</p>
+    <p class="stamp">أُعدّت التكاليف استنادًا إلى جدول الأرصدة المنشور رسميًا من Meshy · 4 سبتمبر 2026</p>
+  </header>
+
+  <section>
+    <div class="sec-head"><h2>الملخص التنفيذي</h2></div>
+    <p>تكلفة توليد النموذج ثلاثي الأبعاد ليست العائق في هذا المشروع، بل هي أقل بند في هيكل التكاليف. توليد طبق واحد بأعلى جودة متاحة يكلّف نحو <strong>0.60 دولار</strong>، أي أن قائمة كاملة من 45 طبقًا تكلّف أقل من 40 دولارًا في المواد.</p>
+    <p>البند الحقيقي هو <strong>وقت العمل وجودة التصوير</strong>. لذلك يقوم التسعير المقترح على القيمة المقدَّمة للمطعم لا على تكلفة الإنتاج، ويجمع بين <strong>رسوم تأسيس</strong> تغطي بناء القائمة و<strong>اشتراك شهري</strong> يضمن استمرار تحديثها.</p>
+    <div class="note">
+      <p><strong>الخلاصة المالية:</strong> عميل واحد من الباقة المتوسطة يغطي بالكامل جميع التكاليف الثابتة الشهرية للمنصة. وتبقى تكلفة المنصة قرابة <strong>3%</strong> من الإيراد حتى عند الوصول إلى أربعين عميلًا.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>أولًا: تكلفة إنتاج الطبق الواحد</h2></div>
+    <p>اشتراك Meshy Pro بقيمة 20 دولارًا شهريًا يمنح 1,000 رصيد. تختلف تكلفة الطبق باختلاف النموذج المستخدم، وهذا الاختيار وحده يضاعف التكلفة أو ينصّفها.</p>
+    <table>
+      <caption>تكلفة الرصيد محسوبة على أساس 0.020 دولار للرصيد في باقة Pro.</caption>
+      <thead>
+        <tr>
+          <th>النموذج المستخدم</th>
+          <th class="n">الرصيد</th>
+          <th class="n">تكلفة الطبق</th>
+          <th class="n">أطباق/شهر</th>
+          <th>الملاحظة</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>meshy-7 مع الكسوة</td><td class="n">30</td><td class="n money">$0.60</td><td class="n">33</td><td>أعلى جودة، وهي المعتمدة</td></tr>
+        <tr><td>meshy-t2 طوبولوجيا ذكية</td><td class="n">15</td><td class="n money">$0.30</td><td class="n">66</td><td>نصف التكلفة وشبكة أنظف</td></tr>
+        <tr><td>meshy-7 بكسوة 8K</td><td class="n">35</td><td class="n money">$0.70</td><td class="n">28</td><td>دقة زائدة لا تظهر على الهاتف</td></tr>
+        <tr><td>meshy-7 دون كسوة</td><td class="n">20</td><td class="n money">$0.40</td><td class="n">50</td><td>غير صالح للعرض التجاري</td></tr>
+      </tbody>
+    </table>
+    <div class="note warn">
+      <p><strong>يجب احتساب هامش لإعادة التوليد.</strong> لا تنجح كل صورة من المحاولة الأولى؛ الزوايا غير المناسبة والأطباق المزدحمة والصلصات العاكسة تفشل غالبًا. باحتساب معامل 1.4 تصبح التكلفة الفعلية للطبق المسلَّم نحو <strong>0.84 دولار</strong>.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>ثانيًا: تكلفة خدمة مطعم واحد</h2></div>
+    <p>محسوبة على قائمة من 45 طبقًا، بافتراض أن المطعم يوفّر صوره الاحترافية بنفسه.</p>
+    <table>
+      <thead>
+        <tr><th>البند</th><th>الأساس</th><th class="n">مرة واحدة</th><th class="n">شهريًا</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>توليد النماذج</td><td>45 طبقًا × 0.84 دولار</td><td class="n money">$38</td><td class="n">—</td></tr>
+        <tr><td>اشتراك Meshy</td><td>باقة Pro، 1,000 رصيد</td><td class="n">—</td><td class="n money">$20</td></tr>
+        <tr><td>الاستضافة</td><td>Vercel Pro، مشتركة بين العملاء</td><td class="n">—</td><td class="n money">$20</td></tr>
+        <tr><td>النطاق الفرعي</td><td>اختياري لكل عميل</td><td class="n money">$12</td><td class="n">—</td></tr>
+        <tr><td>وقت التنفيذ</td><td>4 ساعات لأول عميل، 1.5 بعد الأتمتة</td><td class="n">يُحتسب</td><td class="n">—</td></tr>
+        <tr><td>وقت المتابعة</td><td>تعديل الأصناف والقوائم الموسمية</td><td class="n">—</td><td class="n">~30 د</td></tr>
+        <tr class="sum"><td>إجمالي التكلفة النقدية</td><td>دون احتساب أجر العمل — البند الشهري مشترك لا فردي</td><td class="n money">$50</td><td class="n money">$40</td></tr>
+      </tbody>
+    </table>
+    <div class="note warn">
+      <p><strong>القيد الحقيقي هو الرصيد الشهري لا المال.</strong> رصيد باقة Pro يكفي 33 طبقًا فقط، أي أقل من قائمة كاملة واحدة. تعاقُد مطعمين في الشهر نفسه يستوجب شراء رصيد إضافي أو الترقية. يُنصح بتوزيع مواعيد التعاقد على الأشهر، أو الانتقال إلى نموذج meshy-t2 للحصول على 66 طبقًا.</p>
+    </div>
+  </section>
+
+  <section class="page-break">
+    <div class="sec-head"><h2>ثالثًا: باقات الأسعار — السوق المصري</h2></div>
+    <p>التسعير المحلي يُبنى على قدرة السوق على الدفع لا على تحويل سعر الصرف. الأرقام التالية موجَّهة للمطاعم من الفئة المتوسطة والراقية في القاهرة والجيزة والساحل الشمالي.</p>
+    <div class="tiers">
+      <div class="tier">
+        <h3>الباقة التعريفية</h3>
+        <div class="cap">حتى 15 طبقًا — الأصناف المميزة</div>
+        <div class="amt">12,000</div>
+        <div class="per">جنيه تأسيس + 1,500 شهريًا</div>
+        <ul>
+          <li>15 نموذجًا ثلاثي الأبعاد</li>
+          <li>رموز QR جاهزة للطباعة</li>
+          <li>تعديل صنفين شهريًا</li>
+          <li>تقارير مسح أساسية</li>
+        </ul>
+      </div>
+      <div class="tier mid">
+        <h3>باقة القائمة الكاملة</h3>
+        <div class="cap">حتى 45 طبقًا — القائمة بأكملها</div>
+        <div class="amt">30,000</div>
+        <div class="per">جنيه تأسيس + 3,000 شهريًا</div>
+        <ul>
+          <li>45 نموذجًا ثلاثي الأبعاد</li>
+          <li>أحجام وإضافات لكل صنف</li>
+          <li>نقاط تعريف بالمكوّنات</li>
+          <li>تعديل 6 أصناف شهريًا</li>
+          <li>إرسال الطلب عبر واتساب</li>
+          <li>نطاق فرعي باسم المطعم</li>
+        </ul>
+      </div>
+      <div class="tier">
+        <h3>باقة المجموعات</h3>
+        <div class="cap">فروع متعددة — حتى 120 طبقًا</div>
+        <div class="amt">85,000</div>
+        <div class="per">جنيه تأسيس + 8,500 شهريًا</div>
+        <ul>
+          <li>120 نموذجًا ثلاثي الأبعاد</li>
+          <li>حتى 5 فروع</li>
+          <li>أسعار مستقلة لكل فرع</li>
+          <li>تعديل 20 صنفًا شهريًا</li>
+          <li>ربط بأنظمة نقاط البيع</li>
+          <li>تنفيذ خلال 72 ساعة</li>
+        </ul>
+      </div>
+    </div>
+    <p style="font-size:9.5pt;color:var(--muted)">تكلفة النماذج في الباقات الثلاث: نحو 650 و1,900 و5,000 جنيه على الترتيب، أي أن هامش الربح الإجمالي يتجاوز 90% في جميع الحالات قبل احتساب أجر العمل.</p>
+    <div class="note">
+      <p><strong>تنبيه بشأن العملة:</strong> تُحصَّل الإيرادات بالجنيه بينما تُدفع تكاليف Meshy والاستضافة بالدولار. تُراجَع الأسعار المحلية كل ستة أشهر بدل استيعاب تقلّبات الصرف بصمت.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>رابعًا: باقات الخليج والأسواق الدولية</h2></div>
+    <table>
+      <thead>
+        <tr><th>الباقة</th><th class="n">التأسيس</th><th class="n">الاشتراك الشهري</th><th class="n">تكلفة النماذج</th><th class="n">هامش الربح</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>التعريفية — 15 طبقًا</td><td class="n money">$450</td><td class="n money">$45</td><td class="n">$13</td><td class="n">97%</td></tr>
+        <tr><td>القائمة الكاملة — 45 طبقًا</td><td class="n money">$1,200</td><td class="n money">$95</td><td class="n">$38</td><td class="n">97%</td></tr>
+        <tr><td>المجموعات — 120 طبقًا</td><td class="n money">$3,500</td><td class="n money">$290</td><td class="n">$101</td><td class="n">97%</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:12pt">الخدمات الإضافية</h3>
+    <table>
+      <caption>جودة التصوير هي العامل الأول في جودة المخرجات؛ تُسعَّر بوضوح أو يُرفض التنفيذ بصور غير صالحة.</caption>
+      <thead>
+        <tr><th>الخدمة</th><th>الحالة</th><th class="n">السعر (دولار)</th><th class="n">السعر (جنيه)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>طبق إضافي خارج الباقة</td><td>توسّع القائمة</td><td class="n money">$25</td><td class="n money">700</td></tr>
+        <tr><td>جلسة تصوير احترافية</td><td>صور العميل غير صالحة</td><td class="n money">$350</td><td class="n money">9,000</td></tr>
+        <tr><td>تنفيذ عاجل خلال 48 ساعة</td><td>افتتاح أو حملة</td><td class="n money">+40%</td><td class="n money">+40%</td></tr>
+        <tr><td>لغة ثانية</td><td>عربي / إنجليزي</td><td class="n money">$300</td><td class="n money">8,000</td></tr>
+        <tr><td>تحديث قائمة موسمية</td><td>كل ربع سنة</td><td class="n money">$450</td><td class="n money">12,000</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>خامسًا: التوسع وحدود النموذج</h2></div>
+    <table>
+      <caption>محسوبة على باقة القائمة الكاملة بالتسعير الدولي، بافتراض توزيع التعاقدات على مدار السنة.</caption>
+      <thead>
+        <tr><th class="n">العملاء</th><th class="n">الإيراد الشهري</th><th class="n">الرصيد المطلوب</th><th>باقة Meshy</th><th class="n">تكلفة المنصة</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="n">5</td><td class="n money">$475</td><td class="n">~400</td><td>Pro — 20$</td><td class="n money">$40</td></tr>
+        <tr><td class="n">15</td><td class="n money">$1,425</td><td class="n">~1,200</td><td>Premium — 40$</td><td class="n money">$60</td></tr>
+        <tr><td class="n">40</td><td class="n money">$3,800</td><td class="n">~3,200</td><td>Ultra — 100$</td><td class="n money">$120</td></tr>
+      </tbody>
+    </table>
+    <p>تظل تكلفة المنصة قرابة 3% من الإيراد حتى أعلى مستوى في الجدول. الحد الحقيقي للتوسع ليس تكلفة Meshy بل <strong>ساعات العمل</strong>: عند أربعين عميلًا تتحول طلبات التعديل وحدها إلى عمل شبه متفرغ.</p>
+    <ul>
+      <li><strong>أتمتة التعديلات قبل الحاجة إليها.</strong> لوحة تحكم يستبدل فيها المطعم صورة الصنف ويعيد التوليد ذاتيًا تحوّل أكبر بند تشغيلي متكرر إلى ميزة تُباع.</li>
+      <li><strong>تنظيم التعاقدات شهريًا.</strong> الرصيد يتجدد شهريًا ولا يُرحَّل، فالشهر الخامل خسارة صافية والشهر المزدحم يفرض ترقية غير مخطط لها.</li>
+      <li><strong>اختبار نموذج meshy-t2 مبكرًا.</strong> إن أثبت كفاءته مع صور الطعام فإن كل رقم في هذه الوثيقة ينخفض إلى النصف ويتضاعف سقف الإنتاج الشهري.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>سادسًا: المخاطر ومعالجتها</h2></div>
+    <ul>
+      <li><strong>جودة الصورة لا جودة النموذج.</strong> كل حالات الفشل في الاختبار عادت إلى الصورة المصدر؛ صورة بدقة 320 بكسل على خلفية بيضاء أنتجت لوحًا مسطحًا ملتحمًا بالطبق. يُشترط تعاقديًا تسليم صور بمواصفات محددة أو تُباع جلسة التصوير كخدمة.</li>
+      <li><strong>تغيّر أسعار Meshy أو سياساتها.</strong> بُنيت المنظومة بواجهة مزوّد قابلة للاستبدال، وتدعم بالفعل Tripo وfal.ai خلف الواجهة ذاتها. الحفاظ على هذا الفصل هو ضمانة لا تكلّف شيئًا.</li>
+      <li><strong>الباقات المجانية ليست خيارًا.</strong> ثبت بالاختبار أن Meshy و3D AI Studio وRodin تتيح التوليد مجانًا وتمنع التنزيل، ولا يُسلَّم الملف فعليًا إلا باشتراك مدفوع أو عبر نموذج مفتوح المصدر.</li>
+      <li><strong>تراجع الاهتمام بعد فترة الإطلاق.</strong> الواقع المعزز عنصر جذب مؤقت، ويجب أن يشتري الاشتراك الشهري قيمة مستدامة. تقارير المشاهدة التي تبيّن أكثر الأطباق عرضًا وطلبًا هي الحجة التي تبقى بعد انتهاء عامل الجِدّة.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>سابعًا: التوصيات التنفيذية</h2></div>
+    <ul>
+      <li>اعتماد <strong>باقة القائمة الكاملة</strong> كعرض أساسي، وتقديم الباقة التعريفية كمدخل تجريبي فقط.</li>
+      <li>عدم بيع رسوم التأسيس منفردة؛ الاشتراك الشهري هو ما يجعل المشروع تجاريًا مستدامًا.</li>
+      <li>اشتراط مواصفات التصوير كتابيًا ضمن العقد، وتسعير جلسة التصوير كخدمة مستقلة.</li>
+      <li>البدء بثلاثة مطاعم مرجعية بسعر تفضيلي مقابل حق استخدام الحالة كنموذج تسويقي.</li>
+      <li>إجراء اختبار مقارن بين meshy-7 وmeshy-t2 على طبقين فقط قبل التوسع؛ تكلفته 45 رصيدًا وقد يخفض التكلفة إلى النصف.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>أرقام الأرصدة وسلوك الواجهة البرمجية مستمدة من التوثيق الرسمي لمنصة Meshy وخادم MCP التابع لها بتاريخ 4 سبتمبر 2026. الأسعار المحلية تقديرات تموضع تسويقي يُوصى بالتحقق منها بعروض فعلية قبل الاعتماد. جميع أرقام التكلفة لا تشمل أجر العمل.</p>
+  </footer>
+
+</div>
+</body>
+</html>
