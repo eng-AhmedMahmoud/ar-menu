@@ -9,7 +9,9 @@
     "start": "next start",
     "models": "node scripts/generate-models.mjs",
     "qr": "node scripts/generate-qr.mjs",
-    "pipeline": "node scripts/generate-models.mjs && node scripts/generate-qr.mjs"
+    "pipeline": "node scripts/generate-models.mjs && node scripts/generate-qr.mjs",
+    "models:hf": "python3 scripts/generate_hf.py",
+    "convert": "/Applications/Blender.app/Contents/MacOS/Blender --background --python scripts/convert.py --"
   },
   "dependencies": {
     "@google/model-viewer": "^4.0.0",

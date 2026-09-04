@@ -5,3 +5,5 @@ node_modules
 .model-cache.json
 next-env.d.ts
 .vercel
+.venv-hy/
+.hf-out/

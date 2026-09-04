@@ -26,6 +26,39 @@ public/qr/burger.png  +  /print  → table tents
 A QR code cannot carry a 3D model — it carries the URL. Everything above exists
 to make that URL worth scanning.
 
+## Providers
+
+Three ways to turn the photo into a mesh. They differ mostly in who lets you keep
+the file.
+
+| Provider | Cost | Gets you the file? |
+|---|---|---|
+| `hf` (default) | free | Yes. Tencent Hunyuan3D-2.1 on a HuggingFace Space |
+| `meshy` | $10+/mo | Yes, on a paid plan only — the free tier blocks downloads |
+| `tripo` | free tier | Yes, but non-commercial and models are public |
+
+The HuggingFace route is the only one that is both free and hands back the mesh.
+Its constraint is ZeroGPU quota: the textured endpoint requests 270s of GPU time
+and a free token affords roughly **one dish per day**. HF PRO raises the budget
+to 40 min/day (~8 dishes). Anonymous calls are capped below 270s and cannot run
+the textured endpoint at all, so a token is required.
+
+```bash
+python3 -m venv .venv-hy && .venv-hy/bin/pip install gradio_client
+# add HF_TOKEN=hf_... to .env  (https://huggingface.co/settings/tokens)
+.venv-hy/bin/python scripts/generate_hf.py margherita
+```
+
+That writes `public/models/<slug>_raw.glb`, then runs `scripts/convert.py` in
+Blender to decimate it under 150k faces, stand it upright, scale it to ~30cm,
+and emit both `<slug>.glb` and `<slug>.usdz`.
+
+Conversion alone, on a mesh from anywhere:
+
+```bash
+pnpm convert -- /path/to/mesh.glb margherita 150000
+```
+
 ## Setup
 
 ```bash
