@@ -3,13 +3,14 @@ import menuData from '@/menu.json'
 export type Variant = {
   id: string
   label: string
+  labelAr?: string
   /** Added to the base price when this variant is selected. */
   priceDelta: number
   /** Multiplies the model's real-world size, so a large really looks large in AR. */
   scale: number
 }
 
-export type Addon = { id: string; label: string; price: number }
+export type Addon = { id: string; label: string; labelAr?: string; price: number }
 
 export type Hotspot = {
   id: string
@@ -24,6 +25,8 @@ export type Hotspot = {
   normal: string
   label: string
   detail: string
+  labelAr?: string
+  detailAr?: string
 }
 
 export type Dish = {
@@ -38,6 +41,7 @@ export type Dish = {
   variants?: Variant[]
   addons?: Addon[]
   hotspots?: Hotspot[]
+  ar?: { name: string; description: string; tags?: string[] }
 }
 
 export type Menu = {
@@ -47,6 +51,7 @@ export type Menu = {
     currency: string
     /** Digits only, country code first. Empty disables the order handoff. */
     whatsapp?: string
+    ar?: { name: string; tagline: string }
   }
   dishes: Dish[]
 }

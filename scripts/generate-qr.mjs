@@ -54,6 +54,9 @@ async function main() {
   await emit('menu', SITE_URL)
   for (const dish of menu.dishes) {
     await emit(dish.slug, `${SITE_URL}/dish/${dish.slug}`)
+    // Standalone product code: opens that product on its own, with no way
+    // through to the rest of the menu. For packaging, stickers and bio links.
+    await emit(`${dish.slug}-solo`, `${SITE_URL}/p/${dish.slug}`)
   }
 
   await writeFile(
@@ -61,7 +64,7 @@ async function main() {
     JSON.stringify({ siteUrl: SITE_URL, generatedFor: menu.dishes.map((d) => d.slug) }, null, 2) + '\n'
   )
 
-  console.log(`\n${menu.dishes.length + 1} QR codes in public/qr/`)
+  console.log(`\n${menu.dishes.length * 2 + 1} QR codes in public/qr/`)
   console.log(`Printable table tents: ${SITE_URL}/print\n`)
 }
 

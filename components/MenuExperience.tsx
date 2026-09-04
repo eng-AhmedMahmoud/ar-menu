@@ -3,6 +3,8 @@
 import { useCallback, useMemo, useState } from 'react'
 import ArViewer from './ArViewer'
 import { menu, money, lineTotal, photoUrl, type Dish } from '@/lib/menu'
+import { useSettings } from './Settings'
+import { addonLabel, dishDesc, dishName, dishTags, variantLabel } from '@/lib/i18n'
 
 type OrderLine = {
   key: string
@@ -18,9 +20,16 @@ type Props = {
   initialSlug: string
   /** Computed at build time — which dishes actually have models on disk. */
   assets: Record<string, { glb: boolean; usdz: boolean }>
+  /**
+   * Standalone mode drops the dish rail and never rewrites the URL, so a
+   * single-product link stays on that product — the whole point of giving it
+   * its own address.
+   */
+  standalone?: boolean
 }
 
-export default function MenuExperience({ initialSlug, assets }: Props) {
+export default function MenuExperience({ initialSlug, assets, standalone = false }: Props) {
+  const { lang, s: txt } = useSettings()
   const [slug, setSlug] = useState(initialSlug)
   const [variantId, setVariantId] = useState<string | undefined>()
   const [addonIds, setAddonIds] = useState<string[]>([])
@@ -31,10 +40,13 @@ export default function MenuExperience({ initialSlug, assets }: Props) {
     () => menu.dishes.find((d) => d.slug === slug) ?? menu.dishes[0],
     [slug]
   )
-
-  // Default to the middle variant so the first thing shown is the standard size.
+  // Default to the variant that costs nothing extra — that is the standard
+  // size the price on the card refers to. Picking by position put an 8oz
+  // "small" in front of customers and quoted a discounted price.
   const activeVariantId =
-    variantId ?? dish.variants?.[Math.floor((dish.variants.length - 1) / 2)]?.id
+    variantId ??
+    dish.variants?.find((v) => v.priceDelta === 0)?.id ??
+    dish.variants?.[0]?.id
   const variant = dish.variants?.find((v) => v.id === activeVariantId)
   const unit = lineTotal(dish, activeVariantId, addonIds)
 
@@ -44,10 +56,10 @@ export default function MenuExperience({ initialSlug, assets }: Props) {
     setSlug(next.slug)
     setVariantId(undefined)
     setAddonIds([])
-    if (typeof window !== 'undefined') {
+    if (!standalone && typeof window !== 'undefined') {
       window.history.replaceState(null, '', `/dish/${next.slug}`)
     }
-  }, [])
+  }, [standalone])
 
   const toggleAddon = (id: string) =>
     setAddonIds((cur) => (cur.includes(id) ? cur.filter((a) => a !== id) : [...cur, id]))
@@ -55,7 +67,7 @@ export default function MenuExperience({ initialSlug, assets }: Props) {
   const addToOrder = useCallback(() => {
     const addonLabels = (dish.addons ?? [])
       .filter((a) => addonIds.includes(a.id))
-      .map((a) => a.label)
+      .map((a) => addonLabel(a, lang))
     const key = `${dish.slug}|${activeVariantId ?? ''}|${addonIds.slice().sort().join(',')}`
     setOrder((cur) => {
       const found = cur.find((l) => l.key === key)
@@ -65,8 +77,8 @@ export default function MenuExperience({ initialSlug, assets }: Props) {
         {
           key,
           slug: dish.slug,
-          name: dish.name,
-          variantLabel: variant?.label,
+          name: dishName(dish, lang),
+          variantLabel: variant ? variantLabel(variant, lang) : undefined,
           addonLabels,
           unit,
           qty: 1,
@@ -74,7 +86,7 @@ export default function MenuExperience({ initialSlug, assets }: Props) {
       ]
     })
     setTrayOpen(true)
-  }, [dish, addonIds, activeVariantId, variant, unit])
+  }, [dish, addonIds, activeVariantId, variant, unit, lang])
 
   const setQty = (key: string, delta: number) =>
     setOrder((cur) =>
@@ -92,7 +104,7 @@ export default function MenuExperience({ initialSlug, assets }: Props) {
         `${l.qty}x ${l.name}${l.variantLabel ? ` (${l.variantLabel})` : ''}` +
         `${l.addonLabels.length ? ` + ${l.addonLabels.join(', ')}` : ''} — ${money(l.unit * l.qty)}`
     )
-    const text = `${menu.restaurant.name} order:\n${lines.join('\n')}\n\nTotal: ${money(total)}`
+    const text = `${menu.restaurant.name}:\n${lines.join('\n')}\n\nTotal: ${money(total)}`
     const phone = menu.restaurant.whatsapp
     if (phone) {
       window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank')
@@ -117,8 +129,8 @@ export default function MenuExperience({ initialSlug, assets }: Props) {
         onOrder={addToOrder}
       />
 
-      {menu.dishes.length > 1 ? (
-        <div className="rail" role="tablist" aria-label="Dishes">
+      {!standalone && menu.dishes.length > 1 ? (
+        <div className="rail" role="tablist" aria-label={txt.dishes}>
           {menu.dishes.map((d) => (
             <button
               key={d.slug}
@@ -129,7 +141,7 @@ export default function MenuExperience({ initialSlug, assets }: Props) {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={photoUrl(d)} alt="" />
-              <span>{d.name}</span>
+              <span>{dishName(d, lang)}</span>
             </button>
           ))}
         </div>
@@ -137,22 +149,22 @@ export default function MenuExperience({ initialSlug, assets }: Props) {
 
       <section className="detail">
         <div className="detail-head">
-          <h1>{dish.name}</h1>
+          <h1>{dishName(dish, lang)}</h1>
           <span className="price">{money(unit)}</span>
         </div>
-        <p className="desc">{dish.description}</p>
+        <p className="desc">{dishDesc(dish, lang)}</p>
 
         <ul className="meta">
-          {dish.prepMinutes ? <li>{dish.prepMinutes} min</li> : null}
-          {dish.calories ? <li>{dish.calories} kcal</li> : null}
-          {(dish.tags ?? []).map((t) => (
+          {dish.prepMinutes ? <li>{dish.prepMinutes} {txt.minutes}</li> : null}
+          {dish.calories ? <li>{dish.calories} {txt.kcal}</li> : null}
+          {dishTags(dish, lang).map((t) => (
             <li key={t}>{t}</li>
           ))}
         </ul>
 
         {dish.variants?.length ? (
           <div className="group">
-            <h2>Size</h2>
+            <h2>{txt.size}</h2>
             <div className="chips">
               {dish.variants.map((v) => (
                 <button
@@ -160,7 +172,7 @@ export default function MenuExperience({ initialSlug, assets }: Props) {
                   className={`chip${v.id === activeVariantId ? ' chip-on' : ''}`}
                   onClick={() => setVariantId(v.id)}
                 >
-                  {v.label}
+                  {variantLabel(v, lang)}
                   {v.priceDelta ? (
                     <em>
                       {v.priceDelta > 0 ? '+' : '−'}
@@ -170,13 +182,13 @@ export default function MenuExperience({ initialSlug, assets }: Props) {
                 </button>
               ))}
             </div>
-            <p className="hint">The model resizes to the real portion — check it in AR.</p>
+            <p className="hint">{txt.scaleHint}</p>
           </div>
         ) : null}
 
         {dish.addons?.length ? (
           <div className="group">
-            <h2>Add-ons</h2>
+            <h2>{txt.addons}</h2>
             <div className="chips">
               {dish.addons.map((a) => (
                 <button
@@ -184,7 +196,7 @@ export default function MenuExperience({ initialSlug, assets }: Props) {
                   className={`chip${addonIds.includes(a.id) ? ' chip-on' : ''}`}
                   onClick={() => toggleAddon(a.id)}
                 >
-                  {a.label}
+                  {addonLabel(a, lang)}
                   <em>+{money(a.price)}</em>
                 </button>
               ))}
@@ -193,7 +205,7 @@ export default function MenuExperience({ initialSlug, assets }: Props) {
         ) : null}
 
         <button className="primary" onClick={addToOrder}>
-          Add to order · {money(unit)}
+          {txt.addToOrder} · {money(unit)}
         </button>
       </section>
 
@@ -207,7 +219,7 @@ export default function MenuExperience({ initialSlug, assets }: Props) {
           {trayOpen ? (
             <div className="tray">
               <div className="tray-head">
-                <h2>Your order</h2>
+                <h2>{txt.yourOrder}</h2>
                 <button className="tray-close" onClick={() => setTrayOpen(false)}>
                   ✕
                 </button>
@@ -221,11 +233,11 @@ export default function MenuExperience({ initialSlug, assets }: Props) {
                       {l.addonLabels.length ? <em>+ {l.addonLabels.join(', ')}</em> : null}
                     </div>
                     <div className="qty">
-                      <button onClick={() => setQty(l.key, -1)} aria-label="Remove one">
+                      <button onClick={() => setQty(l.key, -1)} aria-label={txt.removeOne}>
                         −
                       </button>
                       <span>{l.qty}</span>
-                      <button onClick={() => setQty(l.key, 1)} aria-label="Add one">
+                      <button onClick={() => setQty(l.key, 1)} aria-label={txt.addOne}>
                         +
                       </button>
                     </div>
@@ -234,11 +246,11 @@ export default function MenuExperience({ initialSlug, assets }: Props) {
                 ))}
               </ul>
               <div className="tray-foot">
-                <span>Total</span>
+                <span>{txt.total}</span>
                 <strong>{money(total)}</strong>
               </div>
               <button className="primary" onClick={sendOrder}>
-                Send order to the kitchen
+                {txt.sendOrder}
               </button>
             </div>
           ) : null}

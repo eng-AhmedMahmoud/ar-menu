@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { Dish, Variant } from "@/lib/menu";
+import { useSettings } from "./Settings";
+import { dishDesc, dishName, spotDetail, spotLabel } from "@/lib/i18n";
 
 type Props = {
   dish: Dish;
@@ -32,9 +34,15 @@ declare module "react" {
  * callToAction tap fires a `ar-status`/message back into the page, which is how
  * "Add to order" can work from inside AR.
  */
-function iosSrc(slug: string, name: string, price: string, subtitle: string) {
+function iosSrc(
+  slug: string,
+  name: string,
+  price: string,
+  subtitle: string,
+  cta: string,
+) {
   const params = new URLSearchParams({
-    callToAction: "Add to order",
+    callToAction: cta,
     checkoutTitle: name,
     checkoutSubtitle: subtitle,
     price,
@@ -53,6 +61,7 @@ export default function ArViewer({
   priceLabel,
   onOrder,
 }: Props) {
+  const { lang, s: txt } = useSettings()
   const [ready, setReady] = useState(false);
   const [openSpot, setOpenSpot] = useState<string | null>(null);
   const [resolved, setResolved] = useState<Record<string, string>>({});
@@ -121,7 +130,7 @@ export default function ArViewer({
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={poster} alt={dish.name} className="viewer-poster" />
         {!hasModel && ready ? (
-          <p className="viewer-note">3D model not generated yet</p>
+          <p className="viewer-note">{txt.noModel}</p>
         ) : null}
       </div>
     );
@@ -135,10 +144,10 @@ export default function ArViewer({
         src={`/models/${dish.slug}.glb`}
         ios-src={
           hasUsdz
-            ? iosSrc(dish.slug, dish.name, priceLabel, dish.description)
+            ? iosSrc(dish.slug, dishName(dish, lang), priceLabel, dishDesc(dish, lang), txt.addToOrder)
             : undefined
         }
-        alt={`3D model of ${dish.name}`}
+        alt={dishName(dish, lang)}
         poster={poster}
         scale={`${scale} ${scale} ${scale}`}
         ar
@@ -174,7 +183,7 @@ export default function ArViewer({
               data-normal={spot.normal}
               data-visibility-attribute="visible"
               onClick={() => setOpenSpot(openSpot === spot.id ? null : spot.id)}
-              aria-label={spot.label}
+              aria-label={spotLabel(spot, lang)}
             >
               <span className="hotspot-dot" />
               <span className="hotspot-card">
@@ -185,7 +194,7 @@ export default function ArViewer({
           ))}
 
         <button slot="ar-button" className="ar-button">
-          View on your table
+          {txt.viewOnTable}
         </button>
       </model-viewer>
     </div>

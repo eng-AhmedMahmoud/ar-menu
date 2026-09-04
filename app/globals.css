@@ -1,11 +1,45 @@
 :root {
+  /* Light is the base palette. Neutrals carry a warm bias so they sit with
+     food photography rather than fighting it. */
+  --bg: #faf8f5;
+  --surface: #ffffff;
+  --border: #e6e0d6;
+  --text: #1c1815;
+  --muted: #7a7168;
+  --accent: #b3701a;
+  --accent-ink: #ffffff;
+  --shadow: rgba(28, 24, 21, 0.14);
+  --radius: 14px;
+  color-scheme: light;
+}
+
+/* The viewer's default is "system", which stamps nothing on the root element,
+   so the media query has to carry the dark palette on its own. Guarding it
+   against an explicit light choice keeps the toggle authoritative. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0d0b09;
+    --surface: #17140f;
+    --border: #2b251d;
+    --text: #f5efe6;
+    --muted: #a1968a;
+    --accent: #e8a33d;
+    --accent-ink: #1a1206;
+    --shadow: rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
   --bg: #0d0b09;
   --surface: #17140f;
   --border: #2b251d;
   --text: #f5efe6;
   --muted: #a1968a;
   --accent: #e8a33d;
-  --radius: 14px;
+  --accent-ink: #1a1206;
+  --shadow: rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -48,7 +82,7 @@ a { color: inherit; text-decoration: none; }
 .dish-card:active { transform: scale(0.99); }
 @media (hover: hover) { .dish-card:hover { border-color: var(--accent); } }
 
-.dish-card-photo { width: 104px; height: 100%; min-height: 104px; object-fit: cover; display: block; background: #241f18; }
+.dish-card-photo { width: 104px; height: 100%; min-height: 104px; object-fit: cover; display: block; background: var(--surface); }
 .dish-card-body { padding: 14px 14px 14px 0; display: flex; flex-direction: column; gap: 6px; }
 .dish-card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .dish-card-head h1, .dish-card-head h2 { margin: 0; font-size: 17px; letter-spacing: -0.01em; }
@@ -65,7 +99,7 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   aspect-ratio: 1 / 1;
   max-height: 62vh;
-  background: radial-gradient(circle at 50% 62%, #241f18 0%, var(--bg) 70%);
+  background: radial-gradient(circle at 50% 62%, color-mix(in srgb, var(--accent) 9%, var(--surface)) 0%, var(--bg) 72%);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
@@ -82,12 +116,12 @@ a { color: inherit; text-decoration: none; }
   border: none;
   border-radius: 999px;
   background: var(--accent);
-  color: #1a1206;
+  color: var(--accent-ink);
   font: inherit;
   font-weight: 700;
   font-size: 15px;
   white-space: nowrap;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 6px 24px var(--shadow);
   cursor: pointer;
 }
 
@@ -125,8 +159,8 @@ code { background: var(--surface); border: 1px solid var(--border); border-radiu
 }
 .hotspot-dot {
   width: 13px; height: 13px; border-radius: 50%;
-  background: var(--accent); border: 2px solid #1a1206;
-  box-shadow: 0 0 0 4px rgba(232, 163, 61, 0.25);
+  background: var(--accent); border: 2px solid var(--accent-ink);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 28%, transparent);
   transition: transform 0.15s ease;
 }
 .hotspot-open .hotspot-dot { transform: scale(1.25); }
@@ -136,9 +170,9 @@ code { background: var(--surface); border: 1px solid var(--border); border-radiu
   transform: translateX(-50%);
   width: max-content; max-width: 210px;
   padding: 9px 11px; text-align: left;
-  background: rgba(20, 17, 12, 0.96);
+  background: var(--surface);
   border: 1px solid var(--border); border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 24px var(--shadow);
 }
 .hotspot-open .hotspot-card { display: block; }
 .hotspot-card strong { display: block; font-size: 13px; color: var(--text); }
@@ -179,13 +213,13 @@ code { background: var(--surface); border: 1px solid var(--border); border-radiu
   color: var(--text); font: inherit; font-size: 13.5px;
 }
 .chip em { font-style: normal; font-size: 11.5px; color: var(--muted); }
-.chip-on { border-color: var(--accent); background: rgba(232, 163, 61, 0.1); }
+.chip-on { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
 .chip-on em { color: var(--accent); }
 
 .primary {
   width: 100%; margin-top: 22px; padding: 14px 18px;
   border: none; border-radius: 12px; cursor: pointer;
-  background: var(--accent); color: #1a1206;
+  background: var(--accent); color: var(--accent-ink);
   font: inherit; font-weight: 700; font-size: 15px;
 }
 
@@ -194,12 +228,12 @@ code { background: var(--surface); border: 1px solid var(--border); border-radiu
   position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
   z-index: 20; display: inline-flex; align-items: center; gap: 9px;
   padding: 12px 20px; border: none; border-radius: 999px; cursor: pointer;
-  background: var(--accent); color: #1a1206; font: inherit; font-weight: 700;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+  background: var(--accent); color: var(--accent-ink); font: inherit; font-weight: 700;
+  box-shadow: 0 8px 28px var(--shadow);
 }
 .tray-count {
   display: grid; place-items: center; min-width: 21px; height: 21px;
-  border-radius: 999px; background: #1a1206; color: var(--accent); font-size: 12px;
+  border-radius: 999px; background: var(--accent-ink); color: var(--accent); font-size: 12px;
 }
 .tray {
   position: fixed; inset: auto 0 0 0; z-index: 30;
@@ -208,7 +242,7 @@ code { background: var(--surface); border: 1px solid var(--border); border-radiu
   background: var(--surface);
   border-top: 1px solid var(--border);
   border-radius: 18px 18px 0 0;
-  box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 -12px 40px var(--shadow);
 }
 .tray-head { display: flex; align-items: center; justify-content: space-between; }
 .tray-head h2 { margin: 0; font-size: 17px; }
@@ -229,9 +263,50 @@ code { background: var(--surface); border: 1px solid var(--border); border-radiu
 }
 .tray-foot strong { font-size: 19px; color: var(--accent); font-variant-numeric: tabular-nums; }
 
+/* ------------------------- standalone product ---------------------------- */
+
+.product-page { padding-top: 18px; }
+
+.product-brand {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 16px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+.brand-name { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
+.brand-tag {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Without the rail there is more room for the model, which is the whole
+   reason someone scanned a single-product code. */
+.product-page .viewer { aspect-ratio: 4 / 5; max-height: 68vh; }
+
+.product-foot {
+  margin-top: 30px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.product-foot p { margin: 0; font-size: 12.5px; line-height: 1.6; color: var(--muted); }
+
 /* ------------------------------ print sheet ------------------------------ */
 
 .print-sheet { max-width: 900px; margin: 0 auto; padding: 24px 20px 64px; }
+.sheet-head {
+  margin: 26px 0 4px;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+.tent-solo { border-style: solid; border-color: #999; }
 .tent-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 20px; }
 .tent {
   background: #fff;
@@ -253,4 +328,55 @@ code { background: var(--surface); border: 1px solid var(--border); border-radiu
   .print-sheet { padding: 0; max-width: none; }
   .tent-grid { grid-template-columns: repeat(3, 1fr); gap: 10mm; }
   @page { margin: 12mm; }
+}
+
+/* -------------------------------- RTL ----------------------------------- */
+
+[dir='rtl'] .dish-card-body { padding: 14px 0 14px 14px; }
+[dir='rtl'] .note, [dir='rtl'] .hint { text-align: right; }
+[dir='rtl'] .tray-lines li { direction: rtl; }
+[dir='rtl'] .price, [dir='rtl'] .line-total, [dir='rtl'] .tray-foot strong {
+  direction: ltr;
+  display: inline-block;
+}
+
+/* --------------------------- settings controls --------------------------- */
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-inline-start: auto;
+}
+
+.seg {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.seg button {
+  border: none;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 6px 11px;
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+.seg button[aria-pressed='true'] {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 14px;
 }

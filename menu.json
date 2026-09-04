@@ -3,7 +3,11 @@
     "name": "AR Menu Demo",
     "tagline": "See every dish life-size on your table before you order.",
     "currency": "$",
-    "whatsapp": ""
+    "whatsapp": "",
+    "ar": {
+      "name": "قائمة الواقع المعزز",
+      "tagline": "شاهد كل طبق بحجمه الحقيقي على طاولتك قبل أن تطلب."
+    }
   },
   "dishes": [
     {
@@ -24,36 +28,42 @@
           "id": "personal",
           "label": "Personal 9\"",
           "priceDelta": -4,
-          "scale": 0.75
+          "scale": 0.75,
+          "labelAr": "فردي ٩ بوصة"
         },
         {
           "id": "medium",
           "label": "Medium 12\"",
           "priceDelta": 0,
-          "scale": 1
+          "scale": 1,
+          "labelAr": "وسط ١٢ بوصة"
         },
         {
           "id": "large",
           "label": "Large 16\"",
           "priceDelta": 6,
-          "scale": 1.33
+          "scale": 1.33,
+          "labelAr": "كبير ١٦ بوصة"
         }
       ],
       "addons": [
         {
           "id": "cheese",
           "label": "Extra fior di latte",
-          "price": 3
+          "price": 3,
+          "labelAr": "جبن فيور دي لاتي إضافي"
         },
         {
           "id": "basil",
           "label": "Fresh basil",
-          "price": 1
+          "price": 1,
+          "labelAr": "ريحان طازج"
         },
         {
           "id": "chilli",
           "label": "Calabrian chilli",
-          "price": 2
+          "price": 2,
+          "labelAr": "فلفل كالابريا"
         }
       ],
       "hotspots": [
@@ -62,23 +72,38 @@
           "anchor": "0.86 0.72 0.5",
           "normal": "1 0.5 0",
           "label": "48-hour crust",
-          "detail": "Cold-fermented two days, then stone-baked at 430°C."
+          "detail": "Cold-fermented two days, then stone-baked at 430°C.",
+          "labelAr": "عجينة ٤٨ ساعة",
+          "detailAr": "تخمير بارد ليومين ثم خبز على الحجر عند ٤٣٠ درجة."
         },
         {
           "id": "cheese",
           "anchor": "0.5 0.99 0.44",
           "normal": "0 1 0",
           "label": "Fior di latte",
-          "detail": "Torn by hand, added in the last 90 seconds."
+          "detail": "Torn by hand, added in the last 90 seconds.",
+          "labelAr": "فيور دي لاتي",
+          "detailAr": "يُقطَّع يدويًا ويُضاف في آخر ٩٠ ثانية."
         },
         {
           "id": "board",
           "anchor": "0.18 0.30 0.78",
           "normal": "0 1 0",
           "label": "Olive wood board",
-          "detail": "Cut and served on the board — keeps the base crisp."
+          "detail": "Cut and served on the board — keeps the base crisp.",
+          "labelAr": "لوح خشب زيتون",
+          "detailAr": "تُقطَّع وتُقدَّم على اللوح للحفاظ على قرمشة القاعدة."
         }
-      ]
+      ],
+      "ar": {
+        "name": "بيتزا مارجريتا",
+        "description": "عجينة مخبوزة على الحجر، طماطم سان مارزانو، جبن فيور دي لاتي، زيت زيتون.",
+        "tags": [
+          "نباتي",
+          "يحتوي جلوتين",
+          "يحتوي ألبان"
+        ]
+      }
     },
     {
       "slug": "arrabbiata",
@@ -98,30 +123,35 @@
           "id": "regular",
           "label": "Regular",
           "priceDelta": 0,
-          "scale": 1
+          "scale": 1,
+          "labelAr": "عادي"
         },
         {
           "id": "sharing",
           "label": "Sharing bowl",
           "priceDelta": 8,
-          "scale": 1.4
+          "scale": 1.4,
+          "labelAr": "طبق مشاركة"
         }
       ],
       "addons": [
         {
           "id": "parmesan",
           "label": "Shaved parmesan",
-          "price": 2
+          "price": 2,
+          "labelAr": "جبن بارميزان مبشور"
         },
         {
           "id": "chicken",
           "label": "Grilled chicken",
-          "price": 5
+          "price": 5,
+          "labelAr": "دجاج مشوي"
         },
         {
           "id": "extra-chilli",
           "label": "Extra chilli",
-          "price": 1
+          "price": 1,
+          "labelAr": "فلفل إضافي"
         }
       ],
       "hotspots": [
@@ -130,23 +160,38 @@
           "anchor": "0.5 0.92 0.45",
           "normal": "0 1 0",
           "label": "Bronze-cut penne",
-          "detail": "Rough surface so the sauce actually clings."
+          "detail": "Rough surface so the sauce actually clings.",
+          "labelAr": "بيني مسحوبة بالبرونز",
+          "detailAr": "سطح خشن يتشبّث بالصلصة."
         },
         {
           "id": "chilli",
           "anchor": "0.72 0.85 0.6",
           "normal": "0.5 1 0",
           "label": "Calabrian chilli",
-          "detail": "Slow heat, not sharp — build it up with extra chilli."
+          "detail": "Slow heat, not sharp — build it up with extra chilli.",
+          "labelAr": "فلفل كالابريا",
+          "detailAr": "حرارة متدرجة لا لاذعة."
         },
         {
           "id": "bowl",
           "anchor": "0.14 0.35 0.5",
           "normal": "-1 0.3 0",
           "label": "Served in stoneware",
-          "detail": "Keeps the pasta hot to the last forkful."
+          "detail": "Keeps the pasta hot to the last forkful.",
+          "labelAr": "يُقدَّم في الحجر",
+          "detailAr": "يحافظ على سخونة المعكرونة حتى آخر لقمة."
         }
-      ]
+      ],
+      "ar": {
+        "name": "بيني أرابياتا",
+        "description": "معكرونة بيني، طماطم سان مارزانو، ثوم، فلفل كالابريا، زيتون، بقدونس.",
+        "tags": [
+          "نباتي",
+          "حار",
+          "يحتوي جلوتين"
+        ]
+      }
     },
     {
       "slug": "brulee-milk-tea",
@@ -166,30 +211,35 @@
           "id": "regular",
           "label": "Regular 16oz",
           "priceDelta": 0,
-          "scale": 1
+          "scale": 1,
+          "labelAr": "عادي ١٦ أونصة"
         },
         {
           "id": "large",
           "label": "Large 22oz",
           "priceDelta": 2,
-          "scale": 1.18
+          "scale": 1.18,
+          "labelAr": "كبير ٢٢ أونصة"
         }
       ],
       "addons": [
         {
           "id": "extra-boba",
           "label": "Extra tapioca pearls",
-          "price": 1
+          "price": 1,
+          "labelAr": "لآلئ تابيوكا إضافية"
         },
         {
           "id": "extra-brulee",
           "label": "Double brûlée crust",
-          "price": 1
+          "price": 1,
+          "labelAr": "طبقة كراميل مضاعفة"
         },
         {
           "id": "less-sweet",
           "label": "Less sweet",
-          "price": 0
+          "price": 0,
+          "labelAr": "سكر أقل"
         }
       ],
       "hotspots": [
@@ -198,23 +248,38 @@
           "anchor": "0.5 0.96 0.5",
           "normal": "0 1 0",
           "label": "Torched to order",
-          "detail": "Sugar crust caramelised on the cup, never pre-made."
+          "detail": "Sugar crust caramelised on the cup, never pre-made.",
+          "labelAr": "تُحرق عند الطلب",
+          "detailAr": "طبقة السكر تُكرمل على الكوب ولا تُحضَّر مسبقًا."
         },
         {
           "id": "pearls",
           "anchor": "0.5 0.12 0.4",
           "normal": "0 0 1",
           "label": "Brown-sugar pearls",
-          "detail": "Cooked fresh, held no longer than four hours."
+          "detail": "Cooked fresh, held no longer than four hours.",
+          "labelAr": "لآلئ السكر البني",
+          "detailAr": "تُطهى طازجة ولا تُحفظ أكثر من أربع ساعات."
         },
         {
           "id": "tea",
           "anchor": "0.86 0.5 0.5",
           "normal": "1 0 0",
           "label": "Roasted oolong",
-          "detail": "Charcoal-roasted leaf, steeped daily."
+          "detail": "Charcoal-roasted leaf, steeped daily.",
+          "labelAr": "أولونغ محمّص",
+          "detailAr": "ورق محمّص على الفحم، ينقع يوميًا."
         }
-      ]
+      ],
+      "ar": {
+        "name": "شاي بالحليب بروليه",
+        "description": "شاي أولونغ محمّص بالحليب، طبقة كراميل محروقة، لآلئ تابيوكا بالسكر البني.",
+        "tags": [
+          "يحتوي ألبان",
+          "بارد",
+          "الأكثر طلبًا"
+        ]
+      }
     },
     {
       "slug": "hot-cocoa",
@@ -234,30 +299,35 @@
           "id": "small",
           "label": "Small 8oz",
           "priceDelta": -1,
-          "scale": 0.88
+          "scale": 0.88,
+          "labelAr": "صغير ٨ أونصة"
         },
         {
           "id": "regular",
           "label": "Regular 12oz",
           "priceDelta": 0,
-          "scale": 1
+          "scale": 1,
+          "labelAr": "عادي ١٢ أونصة"
         }
       ],
       "addons": [
         {
           "id": "marshmallow",
           "label": "Toasted marshmallow",
-          "price": 1
+          "price": 1,
+          "labelAr": "مارشميلو محمّص"
         },
         {
           "id": "oat",
           "label": "Oat milk",
-          "price": 1
+          "price": 1,
+          "labelAr": "حليب شوفان"
         },
         {
           "id": "double-shot",
           "label": "Add espresso",
-          "price": 2
+          "price": 2,
+          "labelAr": "إضافة إسبريسو"
         }
       ],
       "hotspots": [
@@ -266,23 +336,38 @@
           "anchor": "0.5 0.97 0.5",
           "normal": "0 1 0",
           "label": "Poured, not stencilled",
-          "detail": "Free-poured by hand on every cup."
+          "detail": "Free-poured by hand on every cup.",
+          "labelAr": "يُسكب يدويًا",
+          "detailAr": "رسم حر على كل كوب، دون قوالب."
         },
         {
           "id": "cocoa",
           "anchor": "0.5 0.55 0.12",
           "normal": "0 0 -1",
           "label": "Single-origin cocoa",
-          "detail": "Ghanaian beans, ground in house each week."
+          "detail": "Ghanaian beans, ground in house each week.",
+          "labelAr": "كاكاو أحادي المصدر",
+          "detailAr": "حبوب غانية تُطحن داخليًا كل أسبوع."
         },
         {
           "id": "cup",
           "anchor": "0.14 0.3 0.5",
           "normal": "-1 0 0",
           "label": "Compostable cup",
-          "detail": "Plant-lined board, no plastic coating."
+          "detail": "Plant-lined board, no plastic coating.",
+          "labelAr": "كوب قابل للتحلل",
+          "detailAr": "بطانة نباتية بلا طبقة بلاستيكية."
         }
-      ]
+      ],
+      "ar": {
+        "name": "كاكاو ساخن مميّز",
+        "description": "كاكاو أحادي المصدر، حليب كامل الدسم مبخّر، رسم لاتيه يدوي.",
+        "tags": [
+          "يحتوي ألبان",
+          "ساخن",
+          "نباتي"
+        ]
+      }
     }
   ]
 }

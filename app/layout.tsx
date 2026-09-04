@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { menu } from '@/lib/menu'
+import { Settings } from '@/components/Settings'
 import './globals.css'
 
 const siteUrl =
@@ -26,7 +27,9 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Settings>{children}</Settings>
+      </body>
     </html>
   )
 }
