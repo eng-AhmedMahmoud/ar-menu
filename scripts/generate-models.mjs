@@ -104,12 +104,18 @@ const meshy = {
       image_url: await imageAsDataUri(cutoutFor(dish.image)),
       ai_model: process.env.MESHY_MODEL || 'meshy-7',
       topology: 'triangle',
-      target_polycount: Number(process.env.MESHY_POLYCOUNT || 30000),
-      // Defaults to FALSE on meshy-6/7 — without this the API returns the raw
-      // ~1.9M-face mesh, far too heavy for a phone.
+      // Meshy's own guidance is that the highest-quality mesh comes from
+      // should_remesh:false, but that returns ~1.9M faces. Remeshing to 200k
+      // keeps the surface detail a dish needs while staying loadable; the
+      // earlier 30k target was flattening penne into shards.
       should_remesh: true,
+      target_polycount: Number(process.env.MESHY_POLYCOUNT || 200000),
       should_texture: true,
       enable_pbr: true,
+      // Finer geometry on meshy-7. Costs 5 extra credits per dish.
+      ultra_mode: true,
+      // Defaults to "2k" — food reads far better with a denser base colour map.
+      texture_resolution: process.env.MESHY_TEXTURE || '4k',
       // texture_prompt / texture_image_url each add 10 credits per task, and the
       // source photo already guides texturing, so the hint is not worth a third
       // more credits per dish.

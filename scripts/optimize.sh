@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
-# Shrink a generated mesh for phone delivery.
+# Shrink a generated mesh for phone delivery without flattening it.
 #
-# Order matters and the two targets need different treatment:
-#   1. Downscale textures to 1024 while keeping their original encoding — USD
-#      cannot read WebP, so the file Blender turns into .usdz must stay on a
-#      format Quick Look decodes.
-#   2. Blender scales the dish to its real-world size and emits .glb + .usdz.
-#   3. Re-encode only the .glb with WebP textures and Draco geometry, both of
-#      which model-viewer decodes and Quick Look does not.
+# The two targets have different capabilities, so they get different budgets:
+#
+#   .glb  — model-viewer decodes Draco and WebP, so geometry compresses roughly
+#           10:1 and the full face count survives at a small file size.
+#   .usdz — Quick Look decodes neither, so every face and texture byte is paid
+#           for uncompressed. It gets a decimated mesh instead.
+#
+# Texture resolution is the other half of perceived detail; 2048 is kept rather
+# than the 1024 used previously, which was visibly softening the food.
 #
 #   ./scripts/optimize.sh <slug> <target-width-metres>
 set -euo pipefail
@@ -17,27 +19,37 @@ WIDTH="${2:-0.30}"
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 MODELS="$ROOT/public/models"
 BLENDER="${BLENDER_BIN:-/Applications/Blender.app/Contents/MacOS/Blender}"
+TEX="${TEX_SIZE:-2048}"
+USDZ_FACES="${USDZ_FACES:-60000}"
 RAW="$MODELS/${SLUG}_raw.glb"
 TMP="$(mktemp -d)"
+trap 'rm -rf "$TMP"' EXIT
 
 [ -f "$RAW" ] || { echo "missing $RAW"; exit 1; }
 before=$(stat -f%z "$RAW" 2>/dev/null || stat -c%s "$RAW")
 
-# `optimize --texture-compress false` skips the texture pipeline entirely,
-# resize included, so the dedicated command is the one that actually shrinks
-# them while leaving the encoding alone.
-npx gltf-transform resize "$RAW" "$TMP/tex.glb" --width 1024 --height 1024 >/dev/null 2>&1
+# `optimize --texture-compress false` silently skips the whole texture pipeline,
+# resize included. The dedicated command is the one that actually resizes.
+npx gltf-transform resize "$RAW" "$TMP/tex.glb" --width "$TEX" --height "$TEX" >/dev/null 2>&1
 
+# --- iOS: decimated geometry, textures left in a format USD can read ---
 "$BLENDER" --background --python "$ROOT/scripts/convert.py" -- \
-  "$TMP/tex.glb" "$SLUG" 150000 "$WIDTH" >/dev/null 2>&1
+  "$TMP/tex.glb" "$SLUG" "$USDZ_FACES" "$WIDTH" >/dev/null 2>&1
+# convert.py emits both formats on every run, so the decimated .usdz has to be
+# parked before the high-poly pass overwrites it.
+mv "$MODELS/$SLUG.usdz" "$TMP/keep.usdz"
+rm -f "$MODELS/$SLUG.glb"
 
+# --- web/Android: full face count, Draco + WebP ---
+"$BLENDER" --background --python "$ROOT/scripts/convert.py" -- \
+  "$TMP/tex.glb" "$SLUG" 400000 "$WIDTH" >/dev/null 2>&1
+mv "$TMP/keep.usdz" "$MODELS/$SLUG.usdz"
 npx gltf-transform optimize "$MODELS/$SLUG.glb" "$TMP/web.glb" \
-  --texture-compress webp --texture-size 1024 --compress draco --simplify false >/dev/null 2>&1
+  --texture-compress webp --texture-size "$TEX" --compress draco --simplify false >/dev/null 2>&1
 mv "$TMP/web.glb" "$MODELS/$SLUG.glb"
 
+faces=$(npx gltf-transform inspect "$MODELS/$SLUG.glb" 2>/dev/null | grep -iEo '[0-9,]+ *$' | head -1 || echo "?")
 glb=$(stat -f%z "$MODELS/$SLUG.glb" 2>/dev/null || stat -c%s "$MODELS/$SLUG.glb")
 usdz=$(stat -f%z "$MODELS/$SLUG.usdz" 2>/dev/null || stat -c%s "$MODELS/$SLUG.usdz")
-rm -rf "$TMP"
 awk -v s="$SLUG" -v b="$before" -v g="$glb" -v u="$usdz" 'BEGIN{
-  printf "%-14s raw %6.2f MB  ->  glb %6.2f MB   usdz %6.2f MB   (-%d%%)\n",
-    s, b/1048576, g/1048576, u/1048576, (1-(g+u)/(b*2))*100 }'
+  printf "%-14s raw %6.2f MB  ->  glb %5.2f MB   usdz %5.2f MB\n", s, b/1048576, g/1048576, u/1048576 }'
