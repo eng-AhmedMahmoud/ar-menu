@@ -98,11 +98,15 @@ const meshy = {
       ai_model: process.env.MESHY_MODEL || 'meshy-7',
       topology: 'triangle',
       target_polycount: Number(process.env.MESHY_POLYCOUNT || 30000),
+      // Defaults to FALSE on meshy-6/7 — without this the API returns the raw
+      // ~1.9M-face mesh, far too heavy for a phone.
       should_remesh: true,
       should_texture: true,
       enable_pbr: true,
-      // Food-specific texture hint improves the surface read a lot.
-      texture_prompt: `${dish.name}, appetizing plated food, realistic photographic texture`,
+      // texture_prompt / texture_image_url each add 10 credits per task, and the
+      // source photo already guides texturing, so the hint is not worth a third
+      // more credits per dish.
+      target_formats: ["glb", "usdz"],
     }
     const res = await fetch(this.base, {
       method: 'POST',
