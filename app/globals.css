@@ -109,7 +109,8 @@ a { color: inherit; text-decoration: none; }
 
 .ar-button {
   position: absolute;
-  bottom: 16px;
+  z-index: 4;
+  bottom: 18px;
   left: 50%;
   transform: translateX(-50%);
   padding: 13px 26px;

@@ -66,6 +66,7 @@ export default function ArViewer({
   const [openSpot, setOpenSpot] = useState<string | null>(null);
   const [resolved, setResolved] = useState<Record<string, string>>({});
   const [loaded, setLoaded] = useState(false);
+  const [canAR, setCanAR] = useState(false);
   const viewerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -82,6 +83,34 @@ export default function ArViewer({
   useEffect(() => {
     setLoaded(false);
   }, [dish.slug, variant?.id]);
+
+  // `loaded` gates the framing pass, and canActivateAR decides whether an AR
+  // button is worth showing at all — it is false on desktop, where the button
+  // would only mislead. Both settle asynchronously after model-viewer probes
+  // the platform, so the flag is polled briefly rather than read once.
+  useEffect(() => {
+    const el = viewerRef.current as
+      | (HTMLElement & { loaded?: boolean; canActivateAR?: boolean })
+      | null;
+    if (!el || !ready) return;
+
+    const syncLoaded = () => setLoaded(true);
+    const syncAR = () => setCanAR(Boolean(el.canActivateAR));
+
+    if (el.loaded) syncLoaded();
+    syncAR();
+    el.addEventListener("load", syncLoaded);
+    el.addEventListener("ar-status", syncAR);
+    const probe = window.setInterval(syncAR, 400);
+    const stop = window.setTimeout(() => window.clearInterval(probe), 5000);
+
+    return () => {
+      window.clearInterval(probe);
+      window.clearTimeout(stop);
+      el.removeEventListener("load", syncLoaded);
+      el.removeEventListener("ar-status", syncAR);
+    };
+  }, [ready, dish.slug, variant?.id]);
 
 
 
@@ -173,11 +202,21 @@ export default function ArViewer({
               </span>
             </button>
           ))}
+      </model-viewer>
 
-        <button slot="ar-button" className="ar-button">
+      {canAR ? (
+        <button
+          type="button"
+          className="ar-button"
+          onClick={() =>
+            (
+              viewerRef.current as unknown as { activateAR?: () => void } | null
+            )?.activateAR?.()
+          }
+        >
           {txt.viewOnTable}
         </button>
-      </model-viewer>
+      ) : null}
     </div>
   );
 }
