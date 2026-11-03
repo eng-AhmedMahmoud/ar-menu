@@ -7,6 +7,7 @@
     "dev": "portless ar-menu -- next dev",
     "build": "next build",
     "start": "next start",
+    "test": "node --test lib/*.test.mjs",
     "models": "node scripts/generate-models.mjs",
     "qr": "node scripts/generate-qr.mjs",
     "pipeline": "node scripts/generate-models.mjs && node scripts/generate-qr.mjs",

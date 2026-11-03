@@ -2,8 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { t, type Lang, type Strings } from '@/lib/i18n'
-
-type Theme = 'system' | 'light' | 'dark'
+import { DEFAULT_THEME, THEMES, THEME_COLOR, resolveTheme, type Theme } from '@/lib/theme'
 
 type Ctx = { lang: Lang; setLang: (l: Lang) => void; theme: Theme; setTheme: (t: Theme) => void; s: Strings }
 
@@ -17,15 +16,14 @@ export function useSettings(): Ctx {
 
 export function Settings({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<Lang>('en')
-  const [theme, setThemeState] = useState<Theme>('system')
+  const [theme, setThemeState] = useState<Theme>(DEFAULT_THEME)
 
   // Read the stored choice after mount rather than during render: the markup is
   // prerendered, so touching localStorage earlier would mismatch on hydration.
   useEffect(() => {
     const l = localStorage.getItem('lang')
-    const th = localStorage.getItem('theme')
     if (l === 'ar' || l === 'en') setLangState(l)
-    if (th === 'light' || th === 'dark' || th === 'system') setThemeState(th)
+    setThemeState(resolveTheme(localStorage.getItem('theme')))
   }, [])
 
   useEffect(() => {
@@ -35,11 +33,8 @@ export function Settings({ children }: { children: React.ReactNode }) {
   }, [lang])
 
   useEffect(() => {
-    const root = document.documentElement
-    // "system" must remove the attribute entirely, not set a value — the CSS
-    // relies on an unstamped root to fall through to prefers-color-scheme.
-    if (theme === 'system') root.removeAttribute('data-theme')
-    else root.setAttribute('data-theme', theme)
+    document.documentElement.setAttribute('data-theme', theme)
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', THEME_COLOR[theme])
   }, [theme])
 
   const setLang = useCallback((l: Lang) => {
@@ -59,6 +54,8 @@ export function Settings({ children }: { children: React.ReactNode }) {
   )
 }
 
+const THEME_ICON: Record<Theme, string> = { light: '☀', dark: '☾' }
+
 export function SettingsControls() {
   const { lang, setLang, theme, setTheme, s } = useSettings()
   return (
@@ -72,15 +69,17 @@ export function SettingsControls() {
         </button>
       </div>
       <div className="seg" role="group" aria-label={s.theme}>
-        <button aria-pressed={theme === 'light'} onClick={() => setTheme('light')} title="Light">
-          ☀
-        </button>
-        <button aria-pressed={theme === 'system'} onClick={() => setTheme('system')} title="System">
-          ◐
-        </button>
-        <button aria-pressed={theme === 'dark'} onClick={() => setTheme('dark')} title="Dark">
-          ☾
-        </button>
+        {THEMES.map((th) => (
+          <button
+            key={th}
+            aria-pressed={theme === th}
+            onClick={() => setTheme(th)}
+            title={s.themeNames[th]}
+            aria-label={s.themeNames[th]}
+          >
+            {THEME_ICON[th]}
+          </button>
+        ))}
       </div>
     </div>
   )

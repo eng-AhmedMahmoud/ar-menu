@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { menu } from '@/lib/menu'
 import { Settings } from '@/components/Settings'
+import { DEFAULT_THEME, THEME_COLOR } from '@/lib/theme'
 import './globals.css'
 
 const siteUrl =
@@ -16,7 +17,8 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#0d0b09',
+  // Settings repaints this when the viewer switches theme.
+  themeColor: THEME_COLOR[DEFAULT_THEME],
   width: 'device-width',
   initialScale: 1,
   // Quick Look and Scene Viewer both overlay the page; locking zoom keeps the
