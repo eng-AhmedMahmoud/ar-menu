@@ -28,6 +28,7 @@ export const STRINGS = {
     addOne: 'Add one',
     close: 'Close',
     theme: 'Theme',
+    themeNames: { light: 'Light', dark: 'Dark' },
     language: 'Language',
   },
   ar: {
@@ -50,6 +51,7 @@ export const STRINGS = {
     addOne: 'إضافة واحد',
     close: 'إغلاق',
     theme: 'المظهر',
+    themeNames: { light: 'فاتح', dark: 'داكن' },
     language: 'اللغة',
   },
 } as const

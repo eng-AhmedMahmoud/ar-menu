@@ -1,6 +1,7 @@
 :root {
-  /* Light is the base palette. Neutrals carry a warm bias so they sit with
-     food photography rather than fighting it. */
+  /* Light is the base palette and the default: the page does not follow the
+     device's colour scheme, only the toggle. Neutrals carry a warm bias so
+     they sit with food photography rather than fighting it. */
   --bg: #faf8f5;
   --surface: #ffffff;
   --border: #e6e0d6;
@@ -11,23 +12,6 @@
   --shadow: rgba(28, 24, 21, 0.14);
   --radius: 14px;
   color-scheme: light;
-}
-
-/* The viewer's default is "system", which stamps nothing on the root element,
-   so the media query has to carry the dark palette on its own. Guarding it
-   against an explicit light choice keeps the toggle authoritative. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --bg: #0d0b09;
-    --surface: #17140f;
-    --border: #2b251d;
-    --text: #f5efe6;
-    --muted: #a1968a;
-    --accent: #e8a33d;
-    --accent-ink: #1a1206;
-    --shadow: rgba(0, 0, 0, 0.5);
-    color-scheme: dark;
-  }
 }
 
 :root[data-theme='dark'] {
