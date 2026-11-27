@@ -4,11 +4,7 @@ import { Settings } from '@/components/Settings'
 import { DEFAULT_THEME, THEME_COLOR } from '@/lib/theme'
 import './globals.css'
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : 'http://localhost:3000')
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ar-menu.devya.dev'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

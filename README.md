@@ -14,7 +14,7 @@ public/photos/burger.jpg
 public/models/burger.glb   → Android Scene Viewer / WebXR
 public/models/burger.usdz  → iOS Quick Look
         │
-        │  vercel --prod     (page must be HTTPS; AR refuses http)
+        │  deploy-vps.sh     (page must be HTTPS; AR refuses http)
         ▼
 https://your-menu.app/dish/burger
         │
@@ -109,21 +109,25 @@ rather than starting a new one.
 
 ## Deploy, then QR
 
-Order matters — the QR encodes the live URL, so generating codes before the
-first deploy means reprinting every table tent.
+Production is https://ar-menu.devya.dev: the static export (`output: 'export'` → `out/`)
+served by nginx on the Devya VPS (`/home/devya/projects/ar-menu/current`, site
+`deploy/nginx/ar-menu.conf`, TLS by certbot; it left Vercel on 2026-11-27).
 
 ```bash
-vercel --prod                                   # note the URL it prints
-SITE_URL=https://your-menu.vercel.app pnpm qr
-git add public/qr && git commit -m "Add QR codes" && git push
+bash scripts/deploy-vps.sh                      # builds origin/main on the Mac, ships out/
+SITE_URL=https://ar-menu.devya.dev pnpm qr      # only if the URL ever changes
+git add public/qr && git commit -m "Regenerate QR codes" && git push
 ```
 
-Then open `https://your-menu.vercel.app/print` and press ⌘P for the table tents.
+Order matters — the QR encodes the live URL, so generating codes before the
+first deploy means reprinting every table tent. Then open
+`https://ar-menu.devya.dev/print` and press ⌘P for the table tents.
 Print at 100% scale — scaling down a QR below ~2cm makes it unreliable at
 arm's length.
 
-Set `NEXT_PUBLIC_SITE_URL` in the Vercel project too, so Open Graph previews
-resolve against the real domain.
+Merge gate: Jenkins `continuous-integration/jenkins/pr-head`, which runs
+`bash scripts/ci-local.sh` (tests, build, and a check that every QR in
+`public/qr/manifest.json` encodes `https://ar-menu.devya.dev`).
 
 ## Local dev
 
