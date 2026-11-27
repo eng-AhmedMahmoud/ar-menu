@@ -36,7 +36,7 @@ async function main() {
   if (!SITE_URL) {
     console.error(
       'Missing SITE_URL.\n\n' +
-        '  SITE_URL=https://your-menu.vercel.app pnpm qr\n\n' +
+        '  SITE_URL=https://ar-menu.devya.dev pnpm qr\n\n' +
         'Run this AFTER the first deploy — the QR encodes the live URL, so a\n' +
         'placeholder here means reprinting every table tent later.\n'
     )
